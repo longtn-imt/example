@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "563962804135",
+    "project_id": "example-477b8",
+    "storage_bucket": "example-477b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563962804135:android:c9a3ebbd55663b50e0e882",
+        "android_client_info": {
+          "package_name": "com.longtn.example"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqRy8hUMV2e4AWYCd_4Agay-Vof2x3JF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
