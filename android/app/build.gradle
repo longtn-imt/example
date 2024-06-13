@@ -48,10 +48,28 @@ android {
         applicationId "com.longtn.example"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+    }
+
+    // keytool -genkey -v -keystore android/app/keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias debug
+    // keytool -list -keystore android/app/keystore.jks
+    signingConfigs {
+        debug {
+            keyAlias 'debug'
+            keyPassword 'android'
+            storeFile file('keystore.jks')
+            storePassword 'android'
+        }
+
+        release {
+            keyAlias 'debug'
+            keyPassword 'android'
+            storeFile file('keystore.jks')
+            storePassword 'android'
+        }
     }
 
     buildTypes {

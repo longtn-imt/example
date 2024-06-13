@@ -12,7 +12,12 @@
           "package_name": "com.longtn.example"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "563962804135-v9tdp191skua4f301vgfgrt5tdn50qen.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBqRy8hUMV2e4AWYCd_4Agay-Vof2x3JF0"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "563962804135-v9tdp191skua4f301vgfgrt5tdn50qen.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "563962804135-b837j7imc4cctdh75aq22igqbqfrbj8h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.longtn.example"
+              }
+            }
+          ]
         }
       }
     }
