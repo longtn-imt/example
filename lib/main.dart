@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'firebase_authentication.dart';
 import 'firebase_options.dart';
 import 'home_page.dart';
+import 'login_page.dart';
 import 'search_page.dart';
 
 Future<void> main() async {
@@ -24,16 +26,25 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(
-        items: tabs.keys.toList(),
-      ),
-      tabBuilder: (BuildContext context, int index) {
-        return CupertinoTabView(
-          builder: (BuildContext context) {
-            return tabs.entries.elementAt(index).value;
-          },
-        );
+    return StreamBuilder<User?>(
+      stream: FirebaseAuthentication.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.data != null) {
+          return CupertinoTabScaffold(
+            tabBar: CupertinoTabBar(
+              items: tabs.keys.toList(),
+            ),
+            tabBuilder: (BuildContext context, int index) {
+              return CupertinoTabView(
+                builder: (BuildContext context) {
+                  return tabs.entries.elementAt(index).value;
+                },
+              );
+            },
+          );
+        }
+
+        return const LoginPage();
       },
     );
   }
