@@ -23,7 +23,7 @@ class FirebaseAuthentication {
         await googleUser?.authentication;
 
     // Create a new credential
-    final credential = GoogleAuthProvider.credential(
+    final OAuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
@@ -38,7 +38,7 @@ class FirebaseAuthentication {
 
     // Create a credential from the access token
     final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
     // Once signed in, return the UserCredential
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
@@ -59,6 +59,12 @@ class FirebaseAuthentication {
         AppleIDAuthorizationScopes.fullName,
       ],
       nonce: nonce,
+      webAuthenticationOptions: WebAuthenticationOptions(
+        clientId: 'io.ionic.starter',
+        redirectUri: Uri.parse(
+          'https://example-477b8.firebaseapp.com/__/auth/handler',
+        ),
+      ),
     );
 
     // Create an `OAuthCredential` from the credential returned by Apple.

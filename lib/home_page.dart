@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
-        middle: Text('Home'),
+        middle: Text('OAuth Demo'),
       ),
       child: ListView(
         children: [
@@ -38,22 +38,22 @@ class _HomePageState extends State<HomePage> {
               CupertinoListTile.notched(
                 leading: const Icon(CupertinoIcons.person),
                 title: const Text('Name'),
-                additionalInfo: Text(currentUser?.displayName ?? ''),
+                subtitle: Text(currentUser?.displayName ?? 'unknown'),
               ),
               CupertinoListTile.notched(
                 leading: const Icon(CupertinoIcons.mail),
                 title: const Text('Email'),
-                additionalInfo: Text(currentUser?.email ?? ''),
+                subtitle: Text(currentUser?.email ?? 'unknown'),
               ),
               CupertinoListTile.notched(
                 leading: const Icon(CupertinoIcons.phone),
                 title: const Text('Phone number'),
-                additionalInfo: Text(currentUser?.phoneNumber ?? ''),
+                subtitle: Text(currentUser?.phoneNumber ?? 'unknown'),
               ),
               CupertinoListTile.notched(
                 leading: const Icon(CupertinoIcons.link),
                 title: const Text('Photo URL'),
-                additionalInfo: Text(currentUser?.photoURL ?? ''),
+                subtitle: Text(currentUser?.photoURL ?? 'unknown'),
               ),
             ],
           ),
@@ -63,46 +63,54 @@ class _HomePageState extends State<HomePage> {
               CupertinoListTile.notched(
                 leading: const Icon(CupertinoIcons.padlock),
                 title: const Text('UID'),
-                additionalInfo: Text(currentUser?.uid ?? ''),
+                subtitle: Text(currentUser?.uid ?? 'unknown'),
               ),
               CupertinoListTile.notched(
                 leading: const Icon(CupertinoIcons.smoke),
                 title: const Text('Tenant ID'),
-                additionalInfo: Text(currentUser?.tenantId ?? ''),
+                subtitle: Text(currentUser?.tenantId ?? 'unknown'),
               ),
               CupertinoListTile.notched(
                 leading: const Icon(CupertinoIcons.refresh),
                 title: const Text('Refresh token'),
-                additionalInfo: Text(currentUser?.refreshToken ?? ''),
+                subtitle: Text(currentUser?.refreshToken ?? 'unknown'),
               ),
             ],
           ),
           CupertinoListSection.insetGrouped(
             children: [
               CupertinoListTile.notched(
-                title: const Text('Google'),
-                additionalInfo: Text(currentUser?.uid ?? ''),
+                title: const Text(
+                  'Google',
+                  style: TextStyle(color: CupertinoColors.systemGreen),
+                ),
                 trailing: const CupertinoListTileChevron(),
-                onTap: FirebaseAuthentication.instance.signInWithGoogle,
+                onTap: () {
+                  FirebaseAuthentication.instance.signInWithGoogle();
+                },
               ),
               CupertinoListTile.notched(
-                title: const Text('Facebook'),
-                additionalInfo: Text(currentUser?.tenantId ?? ''),
+                title: const Text(
+                  'Facebook',
+                  style: TextStyle(color: CupertinoColors.systemBlue),
+                ),
                 trailing: const CupertinoListTileChevron(),
-                onTap: FirebaseAuthentication.instance.signInWithFacebook,
+                onTap: () {
+                  FirebaseAuthentication.instance.signInWithFacebook();
+                },
               ),
               CupertinoListTile.notched(
                 title: const Text('Apple'),
-                additionalInfo: Text(currentUser?.refreshToken ?? ''),
                 trailing: const CupertinoListTileChevron(),
-                onTap: FirebaseAuthentication.instance.signInWithApple,
+                onTap: () {
+                  FirebaseAuthentication.instance.signInWithApple();
+                },
               ),
               CupertinoListTile.notched(
                 title: const Text(
                   'Logout',
                   style: TextStyle(color: CupertinoColors.systemRed),
                 ),
-                additionalInfo: Text(currentUser?.refreshToken ?? ''),
                 trailing: const CupertinoListTileChevron(),
                 onTap: FirebaseAuthentication.instance.signOut,
               ),
