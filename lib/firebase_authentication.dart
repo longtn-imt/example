@@ -61,7 +61,7 @@ class FirebaseAuthentication {
       ],
       nonce: nonce,
       webAuthenticationOptions: WebAuthenticationOptions(
-        clientId: 'io.ionic.starter',
+        clientId: 'com.longtn.exampler.service',
         redirectUri: Uri.parse(
           'https://example-477b8.firebaseapp.com/__/auth/handler',
         ),
