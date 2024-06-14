@@ -34954,7 +34954,7 @@ lr(){var s=0,r=A.E(t.ep),q,p,o,n,m,l
 var $async$lr=A.A(function(a,b){if(a===1)return A.B(b,r)
 while(true)switch(s){case 0:o=A.anz()
 s=3
-return A.I(A.a56(A.ac5(B.wA.bJ(B.aF.bJ(o)).a),A.a([B.er,B.es],t.qz),new A.YC("io.ionic.starter",A.iK("https://example-477b8.firebaseapp.com/__/auth/handler"))),$async$lr)
+return A.I(A.a56(A.ac5(B.wA.bJ(B.aF.bJ(o)).a),A.a([B.er,B.es],t.qz),new A.YC("com.longtn.exampler.service",A.iK("https://example-477b8.firebaseapp.com/__/auth/handler"))),$async$lr)
 case 3:n=b
 m=t.N
 l=new A.rU(A.a([],t.s),A.t(m,m),"apple.com").Yt(0,n.f,o)
