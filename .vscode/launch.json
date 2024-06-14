@@ -10,11 +10,11 @@
             "type": "dart"
         },
         {
-            "name": "Run chrome",
+            "name": "Run web",
             "request": "launch",
             "type": "dart",
             "args": [
-                "--device-id", "chrome", 
+                "--device-id", "web-server", 
                 "--web-hostname", "localhost", 
                 "--web-port", "7357"
             ]

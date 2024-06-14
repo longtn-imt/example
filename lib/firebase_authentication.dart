@@ -16,7 +16,8 @@ class FirebaseAuthentication {
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAccount? googleUser =
+        await GoogleSignIn().signInSilently();
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
