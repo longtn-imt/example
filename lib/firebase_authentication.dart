@@ -12,6 +12,8 @@ class FirebaseAuthentication {
   const FirebaseAuthentication._();
   static const instance = FirebaseAuthentication._();
 
+  Stream<User?> authStateChanges() => FirebaseAuth.instance.authStateChanges();
+
   Stream<User?> userChanges() => FirebaseAuth.instance.userChanges();
 
   Future<UserCredential> signInWithGoogle() async {
@@ -39,7 +41,7 @@ class FirebaseAuthentication {
 
     // Create a credential from the access token
     final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+        FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
 
     // Once signed in, return the UserCredential
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
