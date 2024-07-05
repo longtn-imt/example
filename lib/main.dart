@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
+import 'dsm/bot_page.dart';
 import 'dsm/dsm_page.dart';
+import 'dsm/notification_page.dart';
+import 'dsm/task_page.dart';
 import 'firebase/firebase_authentication.dart';
 import 'firebase/firebase_options.dart';
 import 'home_page.dart';
@@ -56,10 +59,27 @@ class DashboardPage extends StatelessWidget {
                     title: const Text('User'),
                     body: const UserPage(),
                   ),
-                  PaneItem(
-                    icon: const Icon(FluentIcons.task_solid),
-                    title: const Text('DSM'),
+                  PaneItemExpander(
+                    icon: const Icon(FluentIcons.code),
+                    title: const Text('DevOps'),
                     body: const DsmPage(),
+                    items: [
+                      PaneItem(
+                        icon: const Icon(FluentIcons.task_add),
+                        title: const Text('Task'),
+                        body: const TaskPage(),
+                      ),
+                      PaneItem(
+                        icon: const Icon(FluentIcons.ringer_active),
+                        title: const Text('Notification'),
+                        body: const NotificationPage(),
+                      ),
+                      PaneItem(
+                        icon: const Icon(FluentIcons.robot),
+                        title: const Text('Bot'),
+                        body: const BotPage(),
+                      ),
+                    ],
                   ),
                 ],
                 footerItems: [
