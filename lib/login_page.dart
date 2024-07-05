@@ -1,49 +1,44 @@
-import 'package:flutter/cupertino.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 
-import 'firebase_authentication.dart';
+import 'firebase/firebase_authentication.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.systemGroupedBackground,
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Login'),
-      ),
-      child: ListView(
+    final FluentThemeData theme = FluentTheme.of(context);
+
+    return ScaffoldPage.withPadding(
+      content: Stack(
+        fit: StackFit.expand,
         children: [
-          CupertinoListSection.insetGrouped(
-            children: [
-              CupertinoListTile.notched(
-                title: const Text(
-                  'Google',
-                  style: TextStyle(color: CupertinoColors.systemGreen),
+          const ColoredBox(color: Colors.white),
+          const FlutterLogo(),
+          Acrylic(
+            elevation: 5,
+            child: ListView(
+              padding: const EdgeInsets.all(20),
+              children: [
+                Text(
+                  'Sign in with',
+                  style: theme.typography.title,
                 ),
-                trailing: const CupertinoListTileChevron(),
-                onTap: () {
-                  FirebaseAuthentication.instance.signInWithGoogle();
-                },
-              ),
-              CupertinoListTile.notched(
-                title: const Text(
-                  'Facebook',
-                  style: TextStyle(color: CupertinoColors.systemBlue),
+                const SizedBox(height: 20),
+                ListTile(
+                  title: const Text('Google'),
+                  onPressed: FirebaseAuthentication.instance.signInWithGoogle,
                 ),
-                trailing: const CupertinoListTileChevron(),
-                onTap: () {
-                  FirebaseAuthentication.instance.signInWithFacebook();
-                },
-              ),
-              CupertinoListTile.notched(
-                title: const Text('Apple'),
-                trailing: const CupertinoListTileChevron(),
-                onTap: () {
-                  FirebaseAuthentication.instance.signInWithApple();
-                },
-              ),
-            ],
+                ListTile(
+                  title: const Text('Facebook'),
+                  onPressed: FirebaseAuthentication.instance.signInWithFacebook,
+                ),
+                ListTile(
+                  title: const Text('Apple'),
+                  onPressed: FirebaseAuthentication.instance.signInWithApple,
+                ),
+              ],
+            ),
           ),
         ],
       ),

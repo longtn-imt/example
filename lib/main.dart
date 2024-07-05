@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 
-import 'firebase_authentication.dart';
-import 'firebase_options.dart';
+import 'dsm/dsm_page.dart';
+import 'firebase/firebase_authentication.dart';
+import 'firebase/firebase_options.dart';
 import 'home_page.dart';
 import 'login_page.dart';
 import 'search_page.dart';
+import 'user_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,38 +15,97 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const CupertinoApp(home: DashboardPage()));
+  runApp(const FluentApp(home: DashboardPage()));
 }
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
 
-  static const Map<BottomNavigationBarItem, Widget> tabs = {
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.home)): HomePage(),
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.search)): SearchPage(),
-  };
+  static final ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
       stream: FirebaseAuthentication.instance.authStateChanges(),
       builder: (context, snapshot) {
-        if (snapshot.data != null) {
-          return CupertinoTabScaffold(
-            tabBar: CupertinoTabBar(
-              items: tabs.keys.toList(),
-            ),
-            tabBuilder: (BuildContext context, int index) {
-              return CupertinoTabView(
-                builder: (BuildContext context) {
-                  return tabs.entries.elementAt(index).value;
-                },
-              );
-            },
-          );
-        }
+        /// Login page if the user is not logged in.
+        if (snapshot.data == null) return const LoginPage();
 
-        return const LoginPage();
+        return ValueListenableBuilder(
+          valueListenable: selectedIndexNotifier,
+          builder: (context, value, child) {
+            return NavigationView(
+              appBar: const NavigationAppBar(title: Text('Example App')),
+              pane: NavigationPane(
+                selected: value,
+                onChanged: (index) => selectedIndexNotifier.value = index,
+                header: const Text('Menu feature'),
+                items: [
+                  PaneItem(
+                    icon: const Icon(FluentIcons.home),
+                    title: const Text('Home'),
+                    body: const HomePage(),
+                  ),
+                  PaneItem(
+                    icon: const Icon(FluentIcons.search),
+                    title: const Text('Search'),
+                    body: const SearchPage(),
+                  ),
+                  PaneItem(
+                    icon: const Icon(FluentIcons.account_management),
+                    title: const Text('User'),
+                    body: const UserPage(),
+                  ),
+                  PaneItem(
+                    icon: const Icon(FluentIcons.task_solid),
+                    title: const Text('DSM'),
+                    body: const DsmPage(),
+                  ),
+                ],
+                footerItems: [
+                  PaneItemSeparator(),
+                  PaneItem(
+                    icon: const Icon(FluentIcons.settings),
+                    title: const Text('Settings'),
+                    body: Container(),
+                  ),
+                  PaneItemAction(
+                    icon: const Icon(FluentIcons.sign_out),
+                    title: const Text('Sign out'),
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => ContentDialog(
+                        title: const Text('Sign out'),
+                        content: const Text(
+                          'Are you sure you want to sign out?',
+                        ),
+                        actions: [
+                          Button(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              FirebaseAuthentication.instance.signOut();
+                            },
+                            child: const Text('Sign out'),
+                          ),
+                          FilledButton(
+                            onPressed: Navigator.of(context).pop,
+                            child: const Text('Cancel'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              transitionBuilder: (child, animation) {
+                return DrillInPageTransition(
+                  animation: animation,
+                  child: child,
+                );
+              },
+            );
+          },
+        );
       },
     );
   }
