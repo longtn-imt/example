@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/services.dart';
 
 import 'dsm/bot_page.dart';
 import 'dsm/dsm_page.dart';
@@ -11,12 +12,14 @@ import 'home_page.dart';
 import 'login_page.dart';
 import 'search_page.dart';
 import 'user_page.dart';
+import 'youtube_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await SystemChrome.setPreferredOrientations(DeviceOrientation.values);
 
   runApp(const FluentApp(home: DashboardPage()));
 }
@@ -80,6 +83,11 @@ class DashboardPage extends StatelessWidget {
                         body: const BotPage(),
                       ),
                     ],
+                  ),
+                  PaneItem(
+                    icon: const Icon(FluentIcons.video),
+                    title: const Text('Youtube'),
+                    body: const YoutubePage(),
                   ),
                 ],
                 footerItems: [
