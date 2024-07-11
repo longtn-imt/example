@@ -39,6 +39,89 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+  <div id="loading">
+    <style>
+      body {
+        inset: 0;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        position: fixed;
+      }
+
+      #loading {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        width: 100%;
+      }
+
+      #loading img {
+        animation: 1s ease-in-out 0s infinite alternate breathe;
+        opacity: 0.75;
+        transition: opacity 0.4s;
+      }
+
+      #loading.main_done img {
+        opacity: 1;
+      }
+
+      #loading.init_done img {
+        animation: 0.33s ease-in-out 0s 1 forwards zooooom;
+        opacity: 0.05;
+      }
+
+      @keyframes breathe {
+        from {
+          transform: scale(1);
+        }
+
+        to {
+          transform: scale(0.95);
+        }
+      }
+
+      @keyframes zooooom {
+        from {
+          transform: scale(1);
+        }
+
+        to {
+          transform: scale(10);
+        }
+      }
+    </style>
+    <img src="icons/Icon-192.png" alt="Loading indicator..." />
+  </div>
+  <script>
+    {{flutter_js}}
+    {{flutter_build_config}}
+
+    var loading = document.querySelector("#loading");
+    
+    _flutter.loader
+      .load({
+        serviceWorkerSettings: {
+          serviceWorkerVersion: "{{flutter_service_worker_version}}",
+        },
+        onEntrypointLoaded: async function(engineInitializer) {
+          // Initializing the engine: opacity animation to 1.0
+          loading.classList.add("main_done");
+          const appRunner = await engineInitializer.initializeEngine();
+
+          // Running the app: Zoom animation to 10x
+          loading.classList.add("init_done");
+          const values = await Promise.all([
+            appRunner.runApp(),
+            new Promise((resolve) => setTimeout(resolve, 250)),
+          ]);
+
+          /// App is running: Remove loading indicator
+          loading.remove();
+          const app = values[0];
+        }
+      });
+  </script>
 </body>
 </html>
