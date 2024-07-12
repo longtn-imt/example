@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
-import 'apis/interceptors.dart';
-import 'apis/rest_client.dart';
-import 'models/work_item.dart';
+import '../apis/interceptors.dart';
+import '../apis/rest_client.dart';
+import '../model/work_item.dart';
 
 class DsmPage extends StatefulWidget {
   const DsmPage({super.key});

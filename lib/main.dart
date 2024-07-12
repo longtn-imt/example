@@ -2,17 +2,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
 
-import 'dsm/bot_page.dart';
-import 'dsm/dsm_page.dart';
-import 'dsm/notification_page.dart';
-import 'dsm/task_page.dart';
 import 'firebase/firebase_authentication.dart';
 import 'firebase/firebase_options.dart';
-import 'home_page.dart';
-import 'login_page.dart';
-import 'search_page.dart';
-import 'user_page.dart';
-import 'youtube_page.dart';
+import 'screen/bot_page.dart';
+import 'screen/dsm_page.dart';
+import 'screen/notification_page.dart';
+import 'screen/task_page.dart';
+import 'screen/home_page.dart';
+import 'screen/login_page.dart';
+import 'screen/search_page.dart';
+import 'screen/setting_page.dart';
+import 'screen/user_page.dart';
+import 'screen/youtube_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -95,7 +96,7 @@ class DashboardPage extends StatelessWidget {
                   PaneItem(
                     icon: const Icon(FluentIcons.settings),
                     title: const Text('Settings'),
-                    body: Container(),
+                    body: const SettingPage(),
                   ),
                   PaneItemAction(
                     icon: const Icon(FluentIcons.sign_out),

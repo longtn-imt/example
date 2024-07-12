@@ -8,6 +8,8 @@ class FirebaseAuthentication {
   const FirebaseAuthentication._();
   static const instance = FirebaseAuthentication._();
 
+  User? get currentUser => FirebaseAuth.instance.currentUser;
+
   Stream<User?> authStateChanges() => FirebaseAuth.instance.authStateChanges();
 
   Stream<User?> userChanges() => FirebaseAuth.instance.userChanges();

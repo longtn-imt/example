@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../models/work_item.dart';
+import '../model/work_item.dart';
 import 'list_response.dart';
 
 part 'rest_client.g.dart';

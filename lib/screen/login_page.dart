@@ -1,6 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
-import 'firebase/firebase_authentication.dart';
+import '../firebase/firebase_authentication.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
