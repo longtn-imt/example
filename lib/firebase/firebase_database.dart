@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 import '../model/devops_config.dart';
-import '../widgets/gpt_button.dart';
+import '../widget/gpt_button.dart';
 
 class FirebaseDatabase {
   const FirebaseDatabase._();

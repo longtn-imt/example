@@ -1,6 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
-import '../widgets/devops_expander.dart';
+import '../widget/devops_expander.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
