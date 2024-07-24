@@ -64,11 +64,14 @@ extension FirebaseDatabaseExtStream<T> on Stream<DocumentSnapshot<T>> {
       stream: this,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
+          final content = snapshot.error.toString();
+
           return InfoBar(
+            isLong: true,
             severity: InfoBarSeverity.error,
             title: const Text('Something went wrong'),
-            content: Text(snapshot.error.toString()),
-            action: GptButton(snapshot.error.toString()),
+            content: Text(content),
+            action: GptButton(content),
           );
         }
 

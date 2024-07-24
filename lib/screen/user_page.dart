@@ -29,6 +29,19 @@ class _UserPageState extends State<UserPage> {
     return ScaffoldPage.scrollable(
       header: const PageHeader(title: Text('User')),
       children: [
+        Center(
+          child: CircleAvatar(
+            radius: 48,
+            backgroundImage: NetworkImage(currentUser?.photoURL ?? ''),
+            child: Text(
+              (currentUser?.displayName ?? '')
+                  .split(' ')
+                  .map((e) => e.substring(0, 1))
+                  .join(''),
+              style: const TextStyle(fontSize: 48),
+            ),
+          ),
+        ),
         ListTile(
           leading: const Icon(FluentIcons.user_optional),
           title: const Text('Name'),
@@ -43,11 +56,6 @@ class _UserPageState extends State<UserPage> {
           leading: const Icon(FluentIcons.phone),
           title: const Text('Phone number'),
           subtitle: Text(currentUser?.phoneNumber ?? 'unknown'),
-        ),
-        ListTile(
-          leading: const Icon(FluentIcons.link),
-          title: const Text('Photo URL'),
-          subtitle: Text(currentUser?.photoURL ?? 'unknown'),
         ),
         ListTile(
           leading: const Icon(FluentIcons.umbrella),
