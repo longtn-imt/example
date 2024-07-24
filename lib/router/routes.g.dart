@@ -64,10 +64,6 @@ RouteBase get $dashboardShellRoute => ShellRouteData.$route(
           factory: $HomeRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: '/search',
-          factory: $SearchRouteExtension._fromState,
-        ),
-        GoRouteData.$route(
           path: '/user',
           factory: $UserRouteExtension._fromState,
           routes: [
@@ -79,19 +75,11 @@ RouteBase get $dashboardShellRoute => ShellRouteData.$route(
               path: 'task',
               factory: $TaskRouteExtension._fromState,
             ),
-            GoRouteData.$route(
-              path: 'bot',
-              factory: $BotRouteExtension._fromState,
-            ),
           ],
         ),
         GoRouteData.$route(
           path: '/youtube',
           factory: $YoutubeRouteExtension._fromState,
-        ),
-        GoRouteData.$route(
-          path: '/notification',
-          factory: $NotificationRouteExtension._fromState,
         ),
         GoRouteData.$route(
           path: '/setting',
@@ -110,23 +98,6 @@ extension $HomeRouteExtension on HomeRoute {
 
   String get location => GoRouteData.$location(
         '/home',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-extension $SearchRouteExtension on SearchRoute {
-  static SearchRoute _fromState(GoRouterState state) => const SearchRoute();
-
-  String get location => GoRouteData.$location(
-        '/search',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -190,46 +161,11 @@ extension $TaskRouteExtension on TaskRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $BotRouteExtension on BotRoute {
-  static BotRoute _fromState(GoRouterState state) => const BotRoute();
-
-  String get location => GoRouteData.$location(
-        '/user/bot',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
 extension $YoutubeRouteExtension on YoutubeRoute {
   static YoutubeRoute _fromState(GoRouterState state) => const YoutubeRoute();
 
   String get location => GoRouteData.$location(
         '/youtube',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-extension $NotificationRouteExtension on NotificationRoute {
-  static NotificationRoute _fromState(GoRouterState state) =>
-      const NotificationRoute();
-
-  String get location => GoRouteData.$location(
-        '/notification',
       );
 
   void go(BuildContext context) => context.go(location);

@@ -1,13 +1,10 @@
-import 'package:example/screen/notification_page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:go_router/go_router.dart';
 
 import '../firebase/firebase_authentication.dart';
-import '../screen/bot_page.dart';
 import '../screen/dsm_page.dart';
 import '../screen/home_page.dart';
 import '../screen/login_page.dart';
-import '../screen/search_page.dart';
 import '../screen/setting_page.dart';
 import '../screen/task_page.dart';
 import '../screen/user_page.dart';
@@ -40,14 +37,11 @@ class InitialRoute extends GoRouteData {
 @TypedShellRoute<DashboardShellRoute>(
   routes: <TypedRoute<RouteData>>[
     TypedGoRoute<HomeRoute>(path: '/home'),
-    TypedGoRoute<SearchRoute>(path: '/search'),
     TypedGoRoute<UserRoute>(path: '/user', routes: [
       TypedGoRoute<DmsRoute>(path: 'dms'),
       TypedGoRoute<TaskRoute>(path: 'task'),
-      TypedGoRoute<BotRoute>(path: 'bot'),
     ]),
     TypedGoRoute<YoutubeRoute>(path: '/youtube'),
-    TypedGoRoute<NotificationRoute>(path: '/notification'),
     TypedGoRoute<SettingRoute>(path: '/setting'),
   ],
 )
@@ -156,15 +150,6 @@ class HomeRoute extends GoRouteData {
   }
 }
 
-class SearchRoute extends GoRouteData {
-  const SearchRoute();
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const SearchPage();
-  }
-}
-
 class UserRoute extends GoRouteData {
   const UserRoute();
 
@@ -192,15 +177,6 @@ class TaskRoute extends GoRouteData {
   }
 }
 
-class BotRoute extends GoRouteData {
-  const BotRoute();
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const BotPage();
-  }
-}
-
 class YoutubeRoute extends GoRouteData {
   const YoutubeRoute();
 
@@ -216,14 +192,5 @@ class SettingRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const SettingPage();
-  }
-}
-
-class NotificationRoute extends GoRouteData {
-  const NotificationRoute();
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const NotificationPage();
   }
 }
