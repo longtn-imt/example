@@ -1,3 +1,4 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
@@ -7,10 +8,16 @@ import 'router/routes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   await SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseAppCheck.instance.activate(
+    webProvider: ReCaptchaV3Provider(
+      '6LcIGRgqAAAAALVjs_hGsXsjlIVCIevmVJWSQKR-',
+    ),
+    androidProvider: AndroidProvider.playIntegrity,
+    appleProvider: AppleProvider.debug,
+  );
 
   runApp(FluentApp.router(routerConfig: goRouter));
 }
