@@ -16,6 +16,8 @@
     extensions = [
       "Dart-Code.flutter"
       "Dart-Code.dart-code"
+      "eamodio.gitlens"
+      "usernamehw.errorlens"
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file
@@ -35,19 +37,25 @@
             -Ptree-shake-icons=false \
             -Pfilesystem-scheme=org-dartlang-root \
             assembleDebug
-            
-          adb -s emulator-5554 wait-for-device
+
+          adb -s localhost:5555 wait-for-device
         '';
       };
 
       # To run something each time the workspace is (re)started, use the `onStart` hook
+      onStart = {
+        runner-serve = ''
+          flutter pub get
+          flutter pub run build_runner serve --delete-conflicting-outputs
+        '';
+      };
     };
     # Enable previews and customize configuration
     previews = {
       enable = true;
       previews = {
         android = {
-          command = [ "flutter" "run" "--machine" "-d" "emulator-5554" ];
+          command = [ "flutter" "run" "--machine" "-d" "android" "-d" "localhost:5555" ];
           manager = "flutter";
         };
       };
