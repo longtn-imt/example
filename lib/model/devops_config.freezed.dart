@@ -20,7 +20,7 @@ DevopsConfig _$DevopsConfigFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DevopsConfig {
-  String? get usernmae => throw _privateConstructorUsedError;
+  String? get username => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +35,7 @@ abstract class $DevopsConfigCopyWith<$Res> {
           DevopsConfig value, $Res Function(DevopsConfig) then) =
       _$DevopsConfigCopyWithImpl<$Res, DevopsConfig>;
   @useResult
-  $Res call({String? usernmae, String? password});
+  $Res call({String? username, String? password});
 }
 
 /// @nodoc
@@ -51,13 +51,13 @@ class _$DevopsConfigCopyWithImpl<$Res, $Val extends DevopsConfig>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? usernmae = freezed,
+    Object? username = freezed,
     Object? password = freezed,
   }) {
     return _then(_value.copyWith(
-      usernmae: freezed == usernmae
-          ? _value.usernmae
-          : usernmae // ignore: cast_nullable_to_non_nullable
+      username: freezed == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String?,
       password: freezed == password
           ? _value.password
@@ -75,7 +75,7 @@ abstract class _$$DevopsConfigImplCopyWith<$Res>
       __$$DevopsConfigImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? usernmae, String? password});
+  $Res call({String? username, String? password});
 }
 
 /// @nodoc
@@ -89,13 +89,13 @@ class __$$DevopsConfigImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? usernmae = freezed,
+    Object? username = freezed,
     Object? password = freezed,
   }) {
     return _then(_$DevopsConfigImpl(
-      usernmae: freezed == usernmae
-          ? _value.usernmae
-          : usernmae // ignore: cast_nullable_to_non_nullable
+      username: freezed == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String?,
       password: freezed == password
           ? _value.password
@@ -108,19 +108,19 @@ class __$$DevopsConfigImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$DevopsConfigImpl implements _DevopsConfig {
-  const _$DevopsConfigImpl({this.usernmae, this.password});
+  const _$DevopsConfigImpl({this.username, this.password});
 
   factory _$DevopsConfigImpl.fromJson(Map<String, dynamic> json) =>
       _$$DevopsConfigImplFromJson(json);
 
   @override
-  final String? usernmae;
+  final String? username;
   @override
   final String? password;
 
   @override
   String toString() {
-    return 'DevopsConfig(usernmae: $usernmae, password: $password)';
+    return 'DevopsConfig(username: $username, password: $password)';
   }
 
   @override
@@ -128,15 +128,15 @@ class _$DevopsConfigImpl implements _DevopsConfig {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DevopsConfigImpl &&
-            (identical(other.usernmae, usernmae) ||
-                other.usernmae == usernmae) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
             (identical(other.password, password) ||
                 other.password == password));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, usernmae, password);
+  int get hashCode => Object.hash(runtimeType, username, password);
 
   @JsonKey(ignore: true)
   @override
@@ -154,13 +154,13 @@ class _$DevopsConfigImpl implements _DevopsConfig {
 
 abstract class _DevopsConfig implements DevopsConfig {
   const factory _DevopsConfig(
-      {final String? usernmae, final String? password}) = _$DevopsConfigImpl;
+      {final String? username, final String? password}) = _$DevopsConfigImpl;
 
   factory _DevopsConfig.fromJson(Map<String, dynamic> json) =
       _$DevopsConfigImpl.fromJson;
 
   @override
-  String? get usernmae;
+  String? get username;
   @override
   String? get password;
   @override

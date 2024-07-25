@@ -8,12 +8,12 @@ part of 'devops_config.dart';
 
 _$DevopsConfigImpl _$$DevopsConfigImplFromJson(Map<String, dynamic> json) =>
     _$DevopsConfigImpl(
-      usernmae: json['usernmae'] as String?,
+      username: json['username'] as String?,
       password: json['password'] as String?,
     );
 
 Map<String, dynamic> _$$DevopsConfigImplToJson(_$DevopsConfigImpl instance) =>
     <String, dynamic>{
-      'usernmae': instance.usernmae,
+      'username': instance.username,
       'password': instance.password,
     };

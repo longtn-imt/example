@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 import '../firebase/firebase_authentication.dart';
@@ -15,21 +18,73 @@ class DevopsExpander extends StatefulWidget {
 class _DevopsExpanderState extends State<DevopsExpander> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  late StreamSubscription subscription;
 
-  String get userId => FirebaseAuthentication.instance.currentUser!.uid;
+  /// Currrent id user logged
+  String get userId {
+    return FirebaseAuthentication.instance.currentUser!.uid;
+  }
+
+  /// Stream data config
+  Stream<DocumentSnapshot<DevopsConfig>> get stream {
+    return FirebaseDatabase.instance.snapshotsDevopsConfig(userId);
+  }
+
+  /// Update config
+  Future<void> updateConfig(DevopsConfig? value) async {
+    await FirebaseDatabase.instance.saveUserDevopsInfo(
+      userId,
+      data: (value ?? const DevopsConfig()).copyWith(
+        username: usernameController.text,
+        password: passwordController.text,
+      ),
+    );
+
+    if (!mounted) return;
+    await displayInfoBar(
+      context,
+      builder: (BuildContext context, void Function() close) {
+        return InfoBar(
+          title: const Text('Update successfully'),
+          action: IconButton(
+            icon: const Icon(FluentIcons.clear),
+            onPressed: close,
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    subscription = stream.listen((DocumentSnapshot<DevopsConfig> event) {
+      final DevopsConfig? config = event.data();
+
+      if (config != null) {
+        usernameController.text = config.username ?? '';
+        passwordController.text = config.password ?? '';
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    subscription.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Expander(
+      initiallyExpanded: true,
       leading: const Icon(FluentIcons.code),
       header: const Text('DevOps'),
-      content: FirebaseDatabase.instance
-          .snapshotsDevopsConfig(userId)
-          .streamBuilder(buildConfig),
+      content: stream.builder(buildContent),
     );
   }
 
-  Widget buildConfig(BuildContext context, DevopsConfig? data) {
+  Widget buildContent(BuildContext context, DevopsConfig? data) {
     return Column(
       children: [
         InfoLabel(
@@ -49,10 +104,7 @@ class _DevopsExpanderState extends State<DevopsExpander> {
         ),
         const SizedBox(height: 16),
         FilledButton(
-          onPressed: () => FirebaseDatabase.instance.saveUserDevopsInfo(
-            userId,
-            data: data,
-          ),
+          onPressed: () => updateConfig(data),
           child: const Text('Update'),
         )
       ],

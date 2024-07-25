@@ -6,7 +6,7 @@ part 'devops_config.g.dart';
 @freezed
 class DevopsConfig with _$DevopsConfig {
   const factory DevopsConfig({
-    String? usernmae,
+    String? username,
     String? password,
   }) = _DevopsConfig;
 

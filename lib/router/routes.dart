@@ -8,7 +8,6 @@ import '../screen/login_page.dart';
 import '../screen/setting_page.dart';
 import '../screen/task_page.dart';
 import '../screen/user_page.dart';
-import '../screen/youtube_page.dart';
 import 'go_router_refresh_stream.dart';
 
 part 'routes.g.dart';
@@ -41,7 +40,6 @@ class InitialRoute extends GoRouteData {
       TypedGoRoute<DmsRoute>(path: 'dms'),
       TypedGoRoute<TaskRoute>(path: 'task'),
     ]),
-    TypedGoRoute<YoutubeRoute>(path: '/youtube'),
     TypedGoRoute<SettingRoute>(path: '/setting'),
   ],
 )
@@ -53,40 +51,41 @@ class DashboardShellRoute extends ShellRouteData {
     return NavigationView(
       appBar: const NavigationAppBar(title: Text('Example App')),
       pane: NavigationPane(
-          items: $dashboardShellRoute.routes
-              .map((route) => _routeToNavigation(route, navigator))
-              .toList(),
-          selected: routes.indexWhere((e) => state.fullPath == e.$1),
-          onChanged: (value) => GoRouter.of(context).go(routes[value].$1),
-          footerItems: [
-            PaneItemSeparator(),
-            PaneItemAction(
-              icon: const Icon(FluentIcons.sign_out),
-              title: const Text('Sign out'),
-              onTap: () => showDialog(
-                context: context,
-                builder: (context) => ContentDialog(
-                  title: const Text('Sign out'),
-                  content: const Text(
-                    'Are you sure you want to sign out?',
-                  ),
-                  actions: [
-                    Button(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        FirebaseAuthentication.instance.signOut();
-                      },
-                      child: const Text('Sign out'),
-                    ),
-                    FilledButton(
-                      onPressed: Navigator.of(context).pop,
-                      child: const Text('Cancel'),
-                    ),
-                  ],
+        items: $dashboardShellRoute.routes
+            .map((route) => _routeToNavigation(route, navigator))
+            .toList(),
+        selected: routes.indexWhere((e) => state.fullPath == e.$1),
+        onChanged: (value) => GoRouter.of(context).go(routes[value].$1),
+        footerItems: [
+          PaneItemSeparator(),
+          PaneItemAction(
+            icon: const Icon(FluentIcons.sign_out),
+            title: const Text('Sign out'),
+            onTap: () => showDialog(
+              context: context,
+              builder: (context) => ContentDialog(
+                title: const Text('Sign out'),
+                content: const Text(
+                  'Are you sure you want to sign out?',
                 ),
+                actions: [
+                  Button(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      FirebaseAuthentication.instance.signOut();
+                    },
+                    child: const Text('Sign out'),
+                  ),
+                  FilledButton(
+                    onPressed: Navigator.of(context).pop,
+                    child: const Text('Cancel'),
+                  ),
+                ],
               ),
             ),
-          ]),
+          ),
+        ],
+      ),
     );
   }
 
@@ -174,15 +173,6 @@ class TaskRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const TaskPage();
-  }
-}
-
-class YoutubeRoute extends GoRouteData {
-  const YoutubeRoute();
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const YoutubePage();
   }
 }
 

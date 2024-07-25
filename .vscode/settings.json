@@ -7,4 +7,6 @@
     "editor.formatOnSave": true,
   },
   "files.autoSave": "off",
+  "git.autoRepositoryDetection": "subFolders",
+  "window.autoDetectColorScheme": false,
 }

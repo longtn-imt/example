@@ -9,7 +9,7 @@ class FirebaseDatabase {
   static const instance = FirebaseDatabase._();
 
   CollectionReference<DevopsConfig> get _devopCollection {
-    return FirebaseFirestore.instance.collection('users').withConverter(
+    return FirebaseFirestore.instance.collection('devops').withConverter(
         fromFirestore: (snapshot, _) => DevopsConfig.fromJson(snapshot.data()!),
         toFirestore: (value, _) => value.toJson());
   }
@@ -22,16 +22,22 @@ class FirebaseDatabase {
     return _devopCollection.doc(id).snapshots();
   }
 
-  saveUserDevopsInfo(String userId, {DevopsConfig? data}) {}
+  Future<void> saveUserDevopsInfo(String id, {required DevopsConfig data}) {
+    return _devopCollection.doc(id).set(data);
+  }
 }
 
 /// Extension for firebase database
 extension FirebaseDatabaseExtFuture<T> on Future<DocumentSnapshot<T>> {
-  Widget futureBuilder(Widget Function(BuildContext context, T? data) builder) {
+  Widget builder(
+    Widget Function(BuildContext context, T? data) builder, {
+    bool checkHasError = true,
+    bool checkNotExist = true,
+  }) {
     return FutureBuilder(
       future: this,
       builder: (context, snapshot) {
-        if (snapshot.hasError) {
+        if (checkHasError && snapshot.hasError) {
           return InfoBar(
             severity: InfoBarSeverity.error,
             title: const Text('Something went wrong'),
@@ -40,7 +46,7 @@ extension FirebaseDatabaseExtFuture<T> on Future<DocumentSnapshot<T>> {
           );
         }
 
-        if (snapshot.hasData && !snapshot.data!.exists) {
+        if (checkNotExist && snapshot.hasData && !snapshot.data!.exists) {
           return const InfoBar(
             severity: InfoBarSeverity.warning,
             title: Text('Document does not exist'),
@@ -59,11 +65,14 @@ extension FirebaseDatabaseExtFuture<T> on Future<DocumentSnapshot<T>> {
 
 /// Extension for firebase database
 extension FirebaseDatabaseExtStream<T> on Stream<DocumentSnapshot<T>> {
-  Widget streamBuilder(Widget Function(BuildContext context, T? data) builder) {
+  Widget builder(
+    Widget Function(BuildContext context, T? data) builder, {
+    bool checkHasError = true,
+  }) {
     return StreamBuilder(
       stream: this,
       builder: (context, snapshot) {
-        if (snapshot.hasError) {
+        if (checkHasError && snapshot.hasError) {
           final content = snapshot.error.toString();
 
           return InfoBar(

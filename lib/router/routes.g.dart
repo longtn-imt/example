@@ -78,10 +78,6 @@ RouteBase get $dashboardShellRoute => ShellRouteData.$route(
           ],
         ),
         GoRouteData.$route(
-          path: '/youtube',
-          factory: $YoutubeRouteExtension._fromState,
-        ),
-        GoRouteData.$route(
           path: '/setting',
           factory: $SettingRouteExtension._fromState,
         ),
@@ -149,23 +145,6 @@ extension $TaskRouteExtension on TaskRoute {
 
   String get location => GoRouteData.$location(
         '/user/task',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-extension $YoutubeRouteExtension on YoutubeRoute {
-  static YoutubeRoute _fromState(GoRouterState state) => const YoutubeRoute();
-
-  String get location => GoRouteData.$location(
-        '/youtube',
       );
 
   void go(BuildContext context) => context.go(location);
