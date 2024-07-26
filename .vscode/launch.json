@@ -7,13 +7,17 @@
         {
             "name": "Run",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "--dart-define-from-file", ".env",
+            ]
         },
         {
             "name": "Run web",
             "request": "launch",
             "type": "dart",
             "args": [
+                "--dart-define-from-file", ".env",
                 "--device-id", "web-server", 
                 "--web-hostname", "localhost", 
                 "--web-port", "7357"

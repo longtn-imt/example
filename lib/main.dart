@@ -13,7 +13,7 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseAppCheck.instance.activate(
     webProvider: ReCaptchaV3Provider(
-      '6LcIGRgqAAAAALVjs_hGsXsjlIVCIevmVJWSQKR-',
+      const String.fromEnvironment('RE_CAPTCHA_SITE_KEY'),
     ),
     androidProvider: AndroidProvider.playIntegrity,
     appleProvider: AppleProvider.debug,
