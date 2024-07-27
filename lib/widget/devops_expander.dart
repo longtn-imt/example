@@ -16,6 +16,7 @@ class DevopsExpander extends StatefulWidget {
 }
 
 class _DevopsExpanderState extends State<DevopsExpander> {
+  TextEditingController baseUrlController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   late StreamSubscription subscription;
@@ -35,6 +36,7 @@ class _DevopsExpanderState extends State<DevopsExpander> {
     await FirebaseDatabase.instance.saveUserDevopsInfo(
       userId,
       data: (value ?? const DevopsConfig()).copyWith(
+        baseUrl: baseUrlController.text,
         username: usernameController.text,
         password: passwordController.text,
       ),
@@ -62,6 +64,7 @@ class _DevopsExpanderState extends State<DevopsExpander> {
       final DevopsConfig? config = event.data();
 
       if (config != null) {
+        baseUrlController.text = config.baseUrl ?? '';
         usernameController.text = config.username ?? '';
         passwordController.text = config.password ?? '';
       }
@@ -72,6 +75,9 @@ class _DevopsExpanderState extends State<DevopsExpander> {
   void dispose() {
     super.dispose();
     subscription.cancel();
+    baseUrlController.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
   }
 
   @override
@@ -88,10 +94,18 @@ class _DevopsExpanderState extends State<DevopsExpander> {
     return Column(
       children: [
         InfoLabel(
+          label: 'Base url',
+          child: TextBox(
+            controller: baseUrlController,
+            placeholder: 'https://devops.imt-soft.com',
+          ),
+        ),
+        const SizedBox(height: 16),
+        InfoLabel(
           label: 'Username',
           child: TextBox(
             controller: usernameController,
-            placeholder: 'Enter username',
+            placeholder: 'longtn@imt-soft.com',
           ),
         ),
         const SizedBox(height: 16),

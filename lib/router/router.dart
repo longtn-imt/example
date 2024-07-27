@@ -7,22 +7,23 @@ final goRouter = GoRouter(
   refreshListenable: GoRouterRefreshStream(
     FirebaseAuthentication.instance.authStateChanges(),
   ),
-  initialLocation: isAuthenticated
-      ? const LoginRoute().location
-      : const HomeRoute().location,
-  redirect: (context, state) {
-    final bool isLoginPath = state.uri.path.startsWith(
-      const LoginRoute().location,
-    );
-
-    if (!isLoginPath && !isAuthenticated) {
-      return const LoginRoute().location;
-    }
-
-    if (isLoginPath && isAuthenticated) {
-      return const HomeRoute().location;
-    }
-
-    return null;
-  },
+  initialLocation: const InitialRoute().location,
 );
+
+FutureOr<String?> authRedirect(BuildContext context, GoRouterState state) {
+  final bool isLoginPath = state.uri.path.startsWith(
+    const LoginRoute().location,
+  );
+
+  /// Store the intended location so you can redirect after login
+  if (!isLoginPath && !isAuthenticated) {
+    return LoginRoute(from: state.uri.path).location;
+  }
+
+  /// Handle redirecting back after successful login
+  if (isLoginPath && isAuthenticated) {
+    return state.uri.queryParameters['from'];
+  }
+
+  return null;
+}

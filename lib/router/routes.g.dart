@@ -18,10 +18,15 @@ RouteBase get $loginRoute => GoRouteData.$route(
     );
 
 extension $LoginRouteExtension on LoginRoute {
-  static LoginRoute _fromState(GoRouterState state) => const LoginRoute();
+  static LoginRoute _fromState(GoRouterState state) => LoginRoute(
+        from: state.uri.queryParameters['from'],
+      );
 
   String get location => GoRouteData.$location(
         '/login',
+        queryParams: {
+          if (from != null) 'from': from,
+        },
       );
 
   void go(BuildContext context) => context.go(location);

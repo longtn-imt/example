@@ -49,5 +49,9 @@ class FirebaseAuthentication {
           ..setCustomParameters({'locale': 'vi'}),
       );
 
-  Future<void> signOut() => FirebaseAuth.instance.signOut();
+  Future<void> signOut() {
+    GoogleSignIn().signOut();
+
+    return FirebaseAuth.instance.signOut();
+  }
 }

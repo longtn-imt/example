@@ -20,7 +20,9 @@ DevopsConfig _$DevopsConfigFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DevopsConfig {
+  String? get baseUrl => throw _privateConstructorUsedError;
   String? get username => throw _privateConstructorUsedError;
+  @EncryptConverter()
   String? get password => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +37,10 @@ abstract class $DevopsConfigCopyWith<$Res> {
           DevopsConfig value, $Res Function(DevopsConfig) then) =
       _$DevopsConfigCopyWithImpl<$Res, DevopsConfig>;
   @useResult
-  $Res call({String? username, String? password});
+  $Res call(
+      {String? baseUrl,
+      String? username,
+      @EncryptConverter() String? password});
 }
 
 /// @nodoc
@@ -51,10 +56,15 @@ class _$DevopsConfigCopyWithImpl<$Res, $Val extends DevopsConfig>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? baseUrl = freezed,
     Object? username = freezed,
     Object? password = freezed,
   }) {
     return _then(_value.copyWith(
+      baseUrl: freezed == baseUrl
+          ? _value.baseUrl
+          : baseUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -75,7 +85,10 @@ abstract class _$$DevopsConfigImplCopyWith<$Res>
       __$$DevopsConfigImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? username, String? password});
+  $Res call(
+      {String? baseUrl,
+      String? username,
+      @EncryptConverter() String? password});
 }
 
 /// @nodoc
@@ -89,10 +102,15 @@ class __$$DevopsConfigImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? baseUrl = freezed,
     Object? username = freezed,
     Object? password = freezed,
   }) {
     return _then(_$DevopsConfigImpl(
+      baseUrl: freezed == baseUrl
+          ? _value.baseUrl
+          : baseUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -108,19 +126,23 @@ class __$$DevopsConfigImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$DevopsConfigImpl implements _DevopsConfig {
-  const _$DevopsConfigImpl({this.username, this.password});
+  const _$DevopsConfigImpl(
+      {this.baseUrl, this.username, @EncryptConverter() this.password});
 
   factory _$DevopsConfigImpl.fromJson(Map<String, dynamic> json) =>
       _$$DevopsConfigImplFromJson(json);
 
   @override
+  final String? baseUrl;
+  @override
   final String? username;
   @override
+  @EncryptConverter()
   final String? password;
 
   @override
   String toString() {
-    return 'DevopsConfig(username: $username, password: $password)';
+    return 'DevopsConfig(baseUrl: $baseUrl, username: $username, password: $password)';
   }
 
   @override
@@ -128,6 +150,7 @@ class _$DevopsConfigImpl implements _DevopsConfig {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DevopsConfigImpl &&
+            (identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl) &&
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.password, password) ||
@@ -136,7 +159,7 @@ class _$DevopsConfigImpl implements _DevopsConfig {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, username, password);
+  int get hashCode => Object.hash(runtimeType, baseUrl, username, password);
 
   @JsonKey(ignore: true)
   @override
@@ -154,14 +177,19 @@ class _$DevopsConfigImpl implements _DevopsConfig {
 
 abstract class _DevopsConfig implements DevopsConfig {
   const factory _DevopsConfig(
-      {final String? username, final String? password}) = _$DevopsConfigImpl;
+      {final String? baseUrl,
+      final String? username,
+      @EncryptConverter() final String? password}) = _$DevopsConfigImpl;
 
   factory _DevopsConfig.fromJson(Map<String, dynamic> json) =
       _$DevopsConfigImpl.fromJson;
 
   @override
+  String? get baseUrl;
+  @override
   String? get username;
   @override
+  @EncryptConverter()
   String? get password;
   @override
   @JsonKey(ignore: true)
