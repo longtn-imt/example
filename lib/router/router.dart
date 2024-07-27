@@ -2,11 +2,14 @@ part of 'routes.dart';
 
 bool get isAuthenticated => FirebaseAuthentication.instance.currentUser != null;
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+
 final goRouter = GoRouter(
-  routes: $appRoutes,
+  navigatorKey: navigatorKey,
   refreshListenable: GoRouterRefreshStream(
     FirebaseAuthentication.instance.authStateChanges(),
   ),
+  routes: $appRoutes,
   initialLocation: const InitialRoute().location,
 );
 
