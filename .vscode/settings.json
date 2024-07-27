@@ -8,7 +8,8 @@
   },
   "files.autoSave": "off",
   "git.autoRepositoryDetection": "subFolders",
-  "window.autoDetectColorScheme": false,
   "IDX.aI.enableInlineCompletion": true,
   "IDX.aI.enableCodebaseIndexing": true,
+  "workbench.colorTheme": "Monospace Light",
+  "workbench.preferredDarkColorTheme": "Monospace Dark",
 }
