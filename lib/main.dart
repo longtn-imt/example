@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
 
-import 'firebase/firebase_options.dart';
+import 'firebase_options.dart';
 import 'router/routes.dart';
 
 void main() {

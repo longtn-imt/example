@@ -6,6 +6,8 @@
 	<string>563962804135-q76dmpg6n52m9ouudv5lhd7brfe8b70o.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.563962804135-q76dmpg6n52m9ouudv5lhd7brfe8b70o</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>563962804135-rcgvktkhkp3paopib94f2nmn262bfmlm.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyA__sHcnBlYtxdNZTdibUjveHE9p6-JhPU</string>
 	<key>GCM_SENDER_ID</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:563962804135:ios:20e8224da4d37b95e0e882</string>
+	<string>1:563962804135:ios:ee7d44c095b772d6e0e882</string>
 </dict>
 </plist>

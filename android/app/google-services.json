@@ -7,20 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:563962804135:android:c9a3ebbd55663b50e0e882",
+        "mobilesdk_app_id": "1:563962804135:android:318446c6917d9319e0e882",
         "android_client_info": {
           "package_name": "com.longtn.example"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "563962804135-skrirbjonhl6ilcjuud4vdfvf30b75is.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.longtn.example",
-            "certificate_hash": "f485b8ea333c34f6d4df785ed8ba62f8fca1d93b"
-          }
-        },
         {
           "client_id": "563962804135-v9tdp191skua4f301vgfgrt5tdn50qen.apps.googleusercontent.com",
           "client_type": 3
