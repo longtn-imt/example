@@ -45,6 +45,12 @@ app.*.map.json
 # FVM Version Cache
 .fvm/
 
-# 
+# Lock package
 pubspec.lock
 ios/Podfile.lock
+
+# Generated files
+*.g.dart
+*.freezed.dart
+*.gr.dart
+*.mocks.dart

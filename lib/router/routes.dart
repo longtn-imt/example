@@ -17,24 +17,9 @@ import 'go_router_refresh_stream.dart';
 part 'routes.g.dart';
 part 'router.dart';
 
-@TypedGoRoute<LoginRoute>(path: '/login')
-class LoginRoute extends GoRouteData {
-  const LoginRoute({this.from});
-
-  final String? from;
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const LoginPage();
-  }
-
-  @override
-  FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
-    return authRedirect(context, state);
-  }
-}
-
-@TypedGoRoute<InitialRoute>(path: '/')
+@TypedGoRoute<InitialRoute>(path: '/', routes: [
+  TypedGoRoute<LoginRoute>(path: 'login'),
+])
 class InitialRoute extends GoRouteData {
   const InitialRoute();
 
@@ -60,6 +45,22 @@ class DashboardShellRoute extends ShellRouteData {
   @override
   Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
     return DashboardShell(state: state, navigator: navigator);
+  }
+}
+
+class LoginRoute extends GoRouteData {
+  const LoginRoute({this.from});
+
+  final String? from;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const LoginPage();
+  }
+
+  @override
+  FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
+    return authRedirect(context, state);
   }
 }
 

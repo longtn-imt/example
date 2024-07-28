@@ -33,7 +33,7 @@ class ErrorPage extends StatelessWidget {
       color: Colors.white,
       child: ScaffoldPage.scrollable(
         header: PageHeader(
-          title: Text(error.toString()),
+          title: SelectableText(error.toString()),
           commandBar: IconButton(
             icon: const Icon(FluentIcons.chrome_close),
             onPressed: Navigator.of(context).pop,
