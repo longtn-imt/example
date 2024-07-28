@@ -6,7 +6,6 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
 final goRouter = GoRouter(
   navigatorKey: navigatorKey,
-  errorBuilder: (context, state) => ErrorPage(error: state.error ?? state),
   refreshListenable: GoRouterRefreshStream(
     FirebaseAuthentication.instance.authStateChanges(),
   ),
@@ -15,7 +14,7 @@ final goRouter = GoRouter(
 );
 
 FutureOr<String?> authRedirect(BuildContext context, GoRouterState state) {
-  final bool isLoginPath = state.uri.path.startsWith(
+  final bool isLoginPath = (state.fullPath ?? state.uri.path).startsWith(
     const LoginRoute().location,
   );
 
