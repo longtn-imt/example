@@ -18,10 +18,19 @@
       "Dart-Code.dart-code"
       "eamodio.gitlens"
       "usernamehw.errorlens"
+      "esbenp.prettier-vscode"
+      "PKief.material-icon-theme"
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
+        init-flutter = ''
+          killall -9 dart
+          flutter clean
+          flutter pub cache clean -f
+          flutter pub get --no-example
+        '';
+
         build-flutter = ''
           cd /home/user/example/android
 

@@ -54,3 +54,5 @@ ios/Podfile.lock
 *.freezed.dart
 *.gr.dart
 *.mocks.dart
+
+.firebase/

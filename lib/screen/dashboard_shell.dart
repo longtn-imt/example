@@ -29,32 +29,36 @@ class DashboardShell extends StatelessWidget {
         onChanged: (value) => GoRouter.of(context).go(routes[value].$1),
         footerItems: [
           PaneItemSeparator(),
-          PaneItemAction(
-            icon: const Icon(FluentIcons.sign_out),
-            title: const Text('Sign out'),
-            onTap: () => showDialog(
-              context: context,
-              builder: (context) => ContentDialog(
-                title: const Text('Sign out'),
-                content: const Text(
-                  'Are you sure you want to sign out?',
+          PaneItem(
+            icon: const Icon(FluentIcons.color),
+            title: const Text('Theme'),
+            body: navigator,
+          ),
+          if (FirebaseAuthentication.instance.currentUser != null)
+            PaneItemAction(
+              icon: const Icon(FluentIcons.sign_out),
+              title: const Text('Sign out'),
+              onTap: () => showDialog(
+                context: context,
+                builder: (context) => ContentDialog(
+                  title: const Text('Sign out'),
+                  content: const Text('Are you sure you want to sign out?'),
+                  actions: [
+                    Button(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        FirebaseAuthentication.instance.signOut();
+                      },
+                      child: const Text('Sign out'),
+                    ),
+                    FilledButton(
+                      onPressed: Navigator.of(context).pop,
+                      child: const Text('Cancel'),
+                    ),
+                  ],
                 ),
-                actions: [
-                  Button(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      FirebaseAuthentication.instance.signOut();
-                    },
-                    child: const Text('Sign out'),
-                  ),
-                  FilledButton(
-                    onPressed: Navigator.of(context).pop,
-                    child: const Text('Cancel'),
-                  ),
-                ],
               ),
             ),
-          ),
         ],
       ),
     );
