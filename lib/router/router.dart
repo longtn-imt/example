@@ -6,6 +6,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
 final goRouter = GoRouter(
   navigatorKey: navigatorKey,
+  errorBuilder: (context, state) => ErrorPage(error: state.error ?? state),
   refreshListenable: GoRouterRefreshStream(
     FirebaseAuthentication.instance.authStateChanges(),
   ),

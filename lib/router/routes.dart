@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../firebase/firebase_authentication.dart';
 import '../screen/dashboard_shell.dart';
 import '../screen/dsm_page.dart';
+import '../screen/error_page.dart';
 import '../screen/home_page.dart';
 import '../screen/login_page.dart';
 import '../screen/setting_page.dart';

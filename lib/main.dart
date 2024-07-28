@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/services.dart';
 
 import 'firebase/firebase_options.dart';
 import 'router/routes.dart';
+import 'screen/error_page.dart';
 
 void main() {
   runZonedGuarded(() async {
@@ -24,20 +26,9 @@ void main() {
       appleProvider: AppleProvider.debug,
     );
 
-    runApp(FluentApp.router(routerConfig: goRouter));
-  }, (error, stack) {
-    if (navigatorKey.currentContext == null) return;
+    FlutterError.onError = recordFlutterFatalError;
+    PlatformDispatcher.instance.onError = recordError;
 
-    displayInfoBar(navigatorKey.currentContext!, builder: (context, close) {
-      return InfoBar(
-        severity: InfoBarSeverity.error,
-        title: Text(error.toString()),
-        content: Text(stack.toString()),
-        action: IconButton(
-          icon: const Icon(FluentIcons.clear),
-          onPressed: close,
-        ),
-      );
-    });
-  });
+    runApp(FluentApp.router(routerConfig: goRouter));
+  }, recordError);
 }
