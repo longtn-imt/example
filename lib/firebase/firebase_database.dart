@@ -28,7 +28,7 @@ class FirebaseDatabase {
 }
 
 /// Extension for firebase database
-extension FirebaseDatabaseExtFuture<T> on Future<DocumentSnapshot<T>> {
+extension ExtensionFutureDocumentSnapshot<T> on Future<DocumentSnapshot<T>> {
   Widget builder(
     Widget Function(BuildContext context, T? data) builder, {
     bool checkHasError = true,
@@ -64,7 +64,7 @@ extension FirebaseDatabaseExtFuture<T> on Future<DocumentSnapshot<T>> {
 }
 
 /// Extension for firebase database
-extension FirebaseDatabaseExtStream<T> on Stream<DocumentSnapshot<T>> {
+extension ExtensionStreamDocumentSnapshot<T> on Stream<DocumentSnapshot<T>> {
   Widget builder(
     Widget Function(BuildContext context, T? data) builder, {
     bool checkHasError = true,
@@ -92,4 +92,35 @@ extension FirebaseDatabaseExtStream<T> on Stream<DocumentSnapshot<T>> {
       },
     );
   }
+}
+
+extension ExtensionFuture<T> on Future<T> {
+  Future<T> execute(BuildContext context) => then((T value) {
+        displayInfoBar(
+          context,
+          builder: (context, close) => InfoBar(
+            severity: InfoBarSeverity.success,
+            title: const Text('Execute successfully'),
+            action: IconButton(
+              icon: const Icon(FluentIcons.clear),
+              onPressed: close,
+            ),
+          ),
+        );
+
+        return value;
+      }).catchError((error, stackTrace) {
+        displayInfoBar(
+          context,
+          builder: (context, close) => InfoBar(
+            isLong: true,
+            severity: InfoBarSeverity.error,
+            title: Text(error.toString()),
+            content: Text(stackTrace.toString()),
+            action: GptButton(error.toString()),
+          ),
+        );
+
+        throw error;
+      });
 }

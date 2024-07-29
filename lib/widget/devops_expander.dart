@@ -31,32 +31,6 @@ class _DevopsExpanderState extends State<DevopsExpander> {
     return FirebaseDatabase.instance.snapshotsDevopsConfig(userId);
   }
 
-  /// Update config
-  Future<void> updateConfig(DevopsConfig? value) async {
-    await FirebaseDatabase.instance.saveUserDevopsInfo(
-      userId,
-      data: (value ?? const DevopsConfig()).copyWith(
-        baseUrl: baseUrlController.text,
-        username: usernameController.text,
-        password: passwordController.text,
-      ),
-    );
-
-    if (!mounted) return;
-    await displayInfoBar(
-      context,
-      builder: (BuildContext context, void Function() close) {
-        return InfoBar(
-          title: const Text('Update successfully'),
-          action: IconButton(
-            icon: const Icon(FluentIcons.clear),
-            onPressed: close,
-          ),
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -118,7 +92,16 @@ class _DevopsExpanderState extends State<DevopsExpander> {
         ),
         const SizedBox(height: 16),
         FilledButton(
-          onPressed: () => updateConfig(data),
+          onPressed: () => FirebaseDatabase.instance
+              .saveUserDevopsInfo(
+                userId,
+                data: (data ?? const DevopsConfig()).copyWith(
+                  baseUrl: baseUrlController.text,
+                  username: usernameController.text,
+                  password: passwordController.text,
+                ),
+              )
+              .execute(context),
           child: const Text('Update'),
         )
       ],
