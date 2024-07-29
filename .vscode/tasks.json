@@ -1,5 +1,18 @@
 {
 	"version": "2.0.0",
+	"inputs": [
+		{
+			"id": "buildType",
+			"description": "Select build type",
+			"type": "pickString",
+			"default": "web",
+			"options": [
+				"web",
+				"apk",
+				"ipa"
+			]
+		}
+	],
 	"tasks": [
 		{
 			"type": "flutter",
@@ -32,6 +45,20 @@
 			],
 			"group": "build",
 			"label": "flutter: flutter pub run build_runner serve --delete-conflicting-outputs"
+		},
+		{
+			"type": "flutter",
+			"command": "flutter",
+			"args": [
+				"build",
+				"${input:buildType}",
+				"--dart-define-from-file",
+				".env",
+			],
+			"group": "build",
+			"problemMatcher": [],
+			"label": "flutter: flutter build app",
+			"detail": ""
 		}
 	]
 }

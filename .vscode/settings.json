@@ -10,6 +10,4 @@
   "git.autoRepositoryDetection": "subFolders",
   "IDX.aI.enableInlineCompletion": true,
   "IDX.aI.enableCodebaseIndexing": true,
-  "workbench.colorTheme": "Monospace Light",
-  "workbench.preferredDarkColorTheme": "Monospace Dark",
 }
