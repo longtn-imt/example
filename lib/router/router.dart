@@ -4,14 +4,14 @@ bool get isAuthenticated => FirebaseAuthentication.instance.currentUser != null;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
-final goRouter = GoRouter(
-  navigatorKey: navigatorKey,
-  refreshListenable: GoRouterRefreshStream(
-    FirebaseAuthentication.instance.authStateChanges(),
-  ),
-  routes: $appRoutes,
-  initialLocation: const InitialRoute().location,
-);
+GoRouter get goRouter => GoRouter(
+      navigatorKey: navigatorKey,
+      refreshListenable: GoRouterRefreshStream(
+        FirebaseAuthentication.instance.authStateChanges(),
+      ),
+      routes: $appRoutes,
+      initialLocation: const InitialRoute().location,
+    );
 
 FutureOr<String?> authRedirect(BuildContext context, GoRouterState state) {
   final bool isLoginPath = (state.fullPath ?? state.uri.path).startsWith(

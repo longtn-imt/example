@@ -2,8 +2,19 @@ import 'package:fluent_ui/fluent_ui.dart';
 
 import '../firebase/firebase_authentication.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuthentication.instance.getRedirectResult().then(print);
+  }
 
   @override
   Widget build(BuildContext context) {

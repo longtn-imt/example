@@ -95,12 +95,16 @@ extension ExtensionStreamDocumentSnapshot<T> on Stream<DocumentSnapshot<T>> {
 }
 
 extension ExtensionFuture<T> on Future<T> {
-  Future<T> execute(BuildContext context) => then((T value) {
+  Future<T> execute(
+    BuildContext context, {
+    String successMessage = 'Execute successfully',
+  }) =>
+      then((T value) {
         displayInfoBar(
           context,
           builder: (context, close) => InfoBar(
             severity: InfoBarSeverity.success,
-            title: const Text('Execute successfully'),
+            title: Text(successMessage),
             action: IconButton(
               icon: const Icon(FluentIcons.clear),
               onPressed: close,

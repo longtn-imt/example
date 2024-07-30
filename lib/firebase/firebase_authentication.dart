@@ -14,6 +14,8 @@ class FirebaseAuthentication {
 
   Stream<User?> userChanges() => FirebaseAuth.instance.userChanges();
 
+  Future getRedirectResult() => FirebaseAuth.instance.getRedirectResult();
+
   Future<UserCredential> signInWithGoogle() async {
     if (kIsWeb) {
       // Create a new provider
@@ -27,7 +29,8 @@ class FirebaseAuthentication {
       });
 
       // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+      await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+      return await FirebaseAuth.instance.getRedirectResult();
     }
 
     // Trigger the authentication flow
