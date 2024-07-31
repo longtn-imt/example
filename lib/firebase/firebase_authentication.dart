@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 export 'package:firebase_auth/firebase_auth.dart' show User;
 
@@ -17,7 +17,7 @@ class FirebaseAuthentication {
   Future<UserCredential> signInWithGoogle() async {
     if (kIsWeb) {
       // Create a new provider
-      GoogleAuthProvider googleProvider = GoogleAuthProvider();
+      final GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
       googleProvider.addScope(
         'https://www.googleapis.com/auth/contacts.readonly',

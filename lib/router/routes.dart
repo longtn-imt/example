@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:example/screen/user_page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,13 +7,13 @@ import '../firebase/firebase_authentication.dart';
 import '../screen/dashboard_shell.dart';
 import '../screen/dsm_page.dart';
 import '../screen/home_page.dart';
-import '../screen/login_page.dart';
 import '../screen/setting_page.dart';
 import '../screen/task_page.dart';
+import '../screen/user_page.dart';
 import 'go_router_refresh_stream.dart';
 
-part 'routes.g.dart';
 part 'router.dart';
+part 'routes.g.dart';
 
 @TypedGoRoute<InitialRoute>(path: '/')
 class InitialRoute extends GoRouteData {

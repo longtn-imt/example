@@ -15,9 +15,7 @@ GoRouter get goRouter => _goRouter ??= GoRouter(
     );
 
 FutureOr<String?> authRedirect(BuildContext context, GoRouterState state) {
-  final bool isLoginPath = (state.fullPath ?? state.uri.path).startsWith(
-    const UserRoute().location,
-  );
+  final bool isLoginPath = state.fullPath == const UserRoute().location;
 
   /// Store the intended location so you can redirect after login
   if (!isLoginPath && !isAuthenticated) {

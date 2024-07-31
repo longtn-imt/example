@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
-import '../firebase/firebase_authentication.dart';
 import '../firebase/firebase_database.dart';
 import '../model/devops_config.dart';
 
@@ -21,14 +20,9 @@ class _DevopsExpanderState extends State<DevopsExpander> {
   TextEditingController passwordController = TextEditingController();
   late StreamSubscription subscription;
 
-  /// Currrent id user logged
-  String get userId {
-    return FirebaseAuthentication.instance.currentUser!.uid;
-  }
-
   /// Stream data config
   Stream<DocumentSnapshot<DevopsConfig>> get stream {
-    return FirebaseDatabase.instance.snapshotsDevopsConfig(userId);
+    return FirebaseDatabase.instance.snapshotsDevopsConfig();
   }
 
   @override
@@ -106,8 +100,7 @@ class _DevopsExpanderState extends State<DevopsExpander> {
         FilledButton(
           onPressed: () => FirebaseDatabase.instance
               .saveUserDevopsInfo(
-                userId,
-                data: (data ?? const DevopsConfig()).copyWith(
+                (data ?? const DevopsConfig()).copyWith(
                   baseUrl: baseUrlController.text,
                   username: usernameController.text,
                   password: passwordController.text,

@@ -1,7 +1,7 @@
-import 'package:example/screen/login_page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 import '../firebase/firebase_authentication.dart';
+import 'login_page.dart';
 
 class UserPage extends StatelessWidget {
   const UserPage({super.key});
