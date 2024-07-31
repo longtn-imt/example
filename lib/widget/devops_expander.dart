@@ -72,6 +72,12 @@ class _DevopsExpanderState extends State<DevopsExpander> {
           child: TextBox(
             controller: baseUrlController,
             placeholder: 'https://devops.imt-soft.com',
+            suffix: IconButton(
+              icon: const Icon(FluentIcons.auto_enhance_on),
+              onPressed: () {
+                baseUrlController.text = 'https://devops.imt-soft.com';
+              },
+            ),
           ),
         ),
         const SizedBox(height: 16),
@@ -79,7 +85,13 @@ class _DevopsExpanderState extends State<DevopsExpander> {
           label: 'Username',
           child: TextBox(
             controller: usernameController,
-            placeholder: 'longtn@imt-soft.com',
+            placeholder: 'username@imt-soft.com',
+            suffix: IconButton(
+              icon: const Icon(FluentIcons.auto_enhance_on),
+              onPressed: () {
+                usernameController.text = 'username@imt-soft.com';
+              },
+            ),
           ),
         ),
         const SizedBox(height: 16),

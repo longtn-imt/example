@@ -16,12 +16,12 @@ GoRouter get goRouter => _goRouter ??= GoRouter(
 
 FutureOr<String?> authRedirect(BuildContext context, GoRouterState state) {
   final bool isLoginPath = (state.fullPath ?? state.uri.path).startsWith(
-    const LoginRoute().location,
+    const UserRoute().location,
   );
 
   /// Store the intended location so you can redirect after login
   if (!isLoginPath && !isAuthenticated) {
-    return LoginRoute(from: state.uri.path).location;
+    return UserRoute(from: state.uri.path).location;
   }
 
   /// Handle redirecting back after successful login

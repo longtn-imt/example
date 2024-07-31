@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:example/screen/user_page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,15 +11,12 @@ import '../screen/home_page.dart';
 import '../screen/login_page.dart';
 import '../screen/setting_page.dart';
 import '../screen/task_page.dart';
-import '../screen/user_page.dart';
 import 'go_router_refresh_stream.dart';
 
 part 'routes.g.dart';
 part 'router.dart';
 
-@TypedGoRoute<InitialRoute>(path: '/', routes: [
-  TypedGoRoute<LoginRoute>(path: 'login'),
-])
+@TypedGoRoute<InitialRoute>(path: '/')
 class InitialRoute extends GoRouteData {
   const InitialRoute();
 
@@ -32,7 +30,7 @@ class InitialRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return Container();
+    return const HomeRoute().build(context, state);
   }
 }
 
@@ -55,22 +53,6 @@ class DashboardShellRoute extends ShellRouteData {
   }
 }
 
-class LoginRoute extends GoRouteData {
-  const LoginRoute({this.from});
-
-  final String? from;
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const LoginPage();
-  }
-
-  @override
-  FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
-    return authRedirect(context, state);
-  }
-}
-
 class HomeRoute extends GoRouteData {
   const HomeRoute();
 
@@ -81,7 +63,9 @@ class HomeRoute extends GoRouteData {
 }
 
 class UserRoute extends GoRouteData {
-  const UserRoute();
+  const UserRoute({this.from});
+
+  final String? from;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
