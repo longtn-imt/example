@@ -79,7 +79,7 @@ class _DsmPageState extends State<DsmPage> {
 
   Widget buildHeader(BuildContext context) {
     return Expander(
-      initiallyExpanded: workItems.isNotEmpty,
+      initiallyExpanded: workItems.isEmpty,
       header: const Text('Project'),
       content: Column(
         children: [

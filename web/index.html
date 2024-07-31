@@ -107,7 +107,7 @@
       .load({
         config: userConfig,
         serviceWorkerSettings: {
-          serviceWorkerVersion: {{flutter_service_worker_version}},
+          serviceWorkerVersion: `{{flutter_service_worker_version}}`,
         },
         onEntrypointLoaded: async function(engineInitializer) {
           // Initializing the engine: opacity animation to 1.0

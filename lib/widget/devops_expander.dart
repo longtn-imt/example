@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 import '../firebase/firebase_database.dart';
@@ -18,31 +15,10 @@ class _DevopsExpanderState extends State<DevopsExpander> {
   TextEditingController baseUrlController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  late StreamSubscription subscription;
-
-  /// Stream data config
-  Stream<DocumentSnapshot<DevopsConfig>> get stream {
-    return FirebaseDatabase.instance.snapshotsDevopsConfig();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    subscription = stream.listen((DocumentSnapshot<DevopsConfig> event) {
-      final DevopsConfig? config = event.data();
-
-      if (config != null) {
-        baseUrlController.text = config.baseUrl ?? '';
-        usernameController.text = config.username ?? '';
-        passwordController.text = config.password ?? '';
-      }
-    });
-  }
 
   @override
   void dispose() {
     super.dispose();
-    subscription.cancel();
     baseUrlController.dispose();
     usernameController.dispose();
     passwordController.dispose();
@@ -54,11 +30,19 @@ class _DevopsExpanderState extends State<DevopsExpander> {
       initiallyExpanded: true,
       leading: const Icon(FluentIcons.code),
       header: const Text('DevOps'),
-      content: stream.builder(buildContent),
+      content: FirebaseDatabase.instance
+          .snapshotsDevopsConfig()
+          .builder(buildContent),
     );
   }
 
   Widget buildContent(BuildContext context, DevopsConfig? data) {
+    if (data != null && mounted) {
+      baseUrlController.text = data.baseUrl ?? '';
+      usernameController.text = data.username ?? '';
+      passwordController.text = data.password ?? '';
+    }
+
     return Column(
       children: [
         InfoLabel(

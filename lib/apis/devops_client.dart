@@ -17,7 +17,8 @@ abstract class DevOpsClient {
     assert(config.username?.isNotEmpty ?? true, 'Username is empty');
     assert(config.password?.isNotEmpty ?? true, 'Password is empty');
 
-    final Dio dio = Dio(BaseOptions(baseUrl: config.baseUrl!))
+    final Dio dio = Dio()
+      ..options.baseUrl = config.baseUrl!
       ..interceptors.add(AuthInterceptor(config.username!, config.password!));
 
     return DevOpsClient(dio);

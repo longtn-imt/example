@@ -15,11 +15,19 @@ class EncryptConverter implements JsonConverter<String, String> {
 
   @override
   String fromJson(String json) {
-    return encrypter.decrypt(Encrypted.from64(json), iv: _iv);
+    try {
+      return encrypter.decrypt(Encrypted.from64(json), iv: _iv);
+    } catch (e) {
+      return '';
+    }
   }
 
   @override
   String toJson(String object) {
-    return encrypter.encrypt(object, iv: _iv).base64;
+    try {
+      return encrypter.encrypt(object, iv: _iv).base64;
+    } catch (e) {
+      return '';
+    }
   }
 }

@@ -26,6 +26,11 @@ class FirebaseAuthentication {
         'login_hint': 'user@example.com',
       });
 
+      // Redirect not support local host
+      if (kDebugMode) {
+        return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+      }
+
       // Once signed in, return the UserCredential
       await FirebaseAuth.instance.signInWithRedirect(googleProvider);
       return await FirebaseAuth.instance.getRedirectResult();
