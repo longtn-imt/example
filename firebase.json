@@ -37,12 +37,6 @@
     ],
     "frameworksBackend": {
       "region": "asia-east1"
-    },
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
+    }
   }
 }

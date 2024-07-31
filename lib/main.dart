@@ -8,8 +8,8 @@ import 'package:flutter/services.dart';
 import 'firebase_options.dart';
 import 'router/routes.dart';
 
-void main() {
-  runZonedGuarded(() async {
+void main() async {
+  await runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await SystemChrome.setPreferredOrientations(DeviceOrientation.values);
 

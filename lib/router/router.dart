@@ -4,7 +4,8 @@ bool get isAuthenticated => FirebaseAuthentication.instance.currentUser != null;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
-GoRouter get goRouter => GoRouter(
+GoRouter? _goRouter; // Signleton
+GoRouter get goRouter => _goRouter ??= GoRouter(
       navigatorKey: navigatorKey,
       refreshListenable: GoRouterRefreshStream(
         FirebaseAuthentication.instance.authStateChanges(),
