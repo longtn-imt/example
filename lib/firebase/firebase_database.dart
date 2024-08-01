@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/foundation.dart';
 
 import '../model/devops_config.dart';
 import '../widget/gpt_button.dart';
@@ -104,7 +105,7 @@ extension ExtensionFuture<T> on Future<T> {
   Future<T> execute(
     BuildContext context, {
     String? successMessage = 'Execute successfully',
-    bool showDetailError = false,
+    bool showDetailError = kDebugMode,
   }) =>
       then((T value) {
         if (successMessage != null) {

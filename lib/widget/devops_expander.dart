@@ -15,6 +15,8 @@ class _DevopsExpanderState extends State<DevopsExpander> {
   TextEditingController baseUrlController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController organizationController = TextEditingController();
+  FocusNode organizationFocusNode = FocusNode();
 
   @override
   void dispose() {
@@ -22,6 +24,8 @@ class _DevopsExpanderState extends State<DevopsExpander> {
     baseUrlController.dispose();
     usernameController.dispose();
     passwordController.dispose();
+    organizationController.dispose();
+    organizationFocusNode.dispose();
   }
 
   @override
@@ -38,9 +42,12 @@ class _DevopsExpanderState extends State<DevopsExpander> {
 
   Widget buildContent(BuildContext context, DevopsConfig? data) {
     if (data != null && mounted) {
-      baseUrlController.text = data.baseUrl ?? '';
-      usernameController.text = data.username ?? '';
-      passwordController.text = data.password ?? '';
+      Future.delayed(Duration.zero, () {
+        baseUrlController.text = data.baseUrl ?? '';
+        usernameController.text = data.username ?? '';
+        passwordController.text = data.password ?? '';
+        organizationController.text = data.selectedOrganization ?? '';
+      });
     }
 
     return Column(
@@ -81,6 +88,8 @@ class _DevopsExpanderState extends State<DevopsExpander> {
           ),
         ),
         const SizedBox(height: 16),
+        buildSelectOrganization(context, data),
+        const SizedBox(height: 16),
         FilledButton(
           onPressed: () => FirebaseDatabase.instance
               .saveUserDevopsInfo(
@@ -90,10 +99,72 @@ class _DevopsExpanderState extends State<DevopsExpander> {
                   password: passwordController.text,
                 ),
               )
-              .execute(context),
+              .execute(context, successMessage: 'Update successfully'),
           child: const Text('Update'),
         )
       ],
+    );
+  }
+
+  Widget buildSelectOrganization(BuildContext context, DevopsConfig? data) {
+    return InfoLabel(
+      label: 'Organization',
+      child: AutoSuggestBox<String>(
+        focusNode: organizationFocusNode,
+        controller: organizationController,
+        placeholder: 'Enter organization name',
+        items: (data?.organizations ?? [])
+            .map((e) => AutoSuggestBoxItem(value: e, label: e))
+            .toList(),
+        itemBuilder: (context, item) {
+          return ListTile(
+            title: Text(
+              item.label,
+              style: FluentTheme.of(context).typography.body,
+            ),
+            onPressed: () => FirebaseDatabase.instance
+                .saveUserDevopsInfo(
+                  (data ?? const DevopsConfig()).copyWith(
+                    selectedOrganization: item.value,
+                  ),
+                )
+                .whenComplete(() => organizationFocusNode.unfocus()),
+            trailing: IconButton(
+              icon: const Icon(FluentIcons.remove, size: 12),
+              onPressed: () => FirebaseDatabase.instance
+                  .saveUserDevopsInfo(
+                    (data ?? const DevopsConfig()).copyWith(
+                      selectedOrganization: null,
+                      organizations: (data?.organizations ?? [])
+                          .where((element) => element != item.value)
+                          .toList(),
+                    ),
+                  )
+                  .execute(context, successMessage: 'Remove successfully'),
+            ),
+          );
+        },
+        noResultsFoundBuilder: (context) {
+          return ListTile(
+            title: Text(
+              'Create new organization',
+              style: FluentTheme.of(context).typography.body,
+            ),
+            trailing: const Icon(FluentIcons.add, size: 12),
+            onPressed: () => FirebaseDatabase.instance
+                .saveUserDevopsInfo(
+                  (data ?? const DevopsConfig()).copyWith(
+                    selectedOrganization: organizationController.text,
+                    organizations: [
+                      ...?data?.organizations,
+                      organizationController.text,
+                    ],
+                  ),
+                )
+                .execute(context, successMessage: 'Create successfully'),
+          );
+        },
+      ),
     );
   }
 }

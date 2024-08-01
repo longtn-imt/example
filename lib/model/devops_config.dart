@@ -11,6 +11,8 @@ class DevopsConfig with _$DevopsConfig {
     String? baseUrl,
     String? username,
     @EncryptConverter() String? password,
+    String? selectedOrganization,
+    @Default([]) List<String> organizations,
   }) = _DevopsConfig;
 
   factory DevopsConfig.fromJson(Map<String, dynamic> json) =>
