@@ -34,68 +34,38 @@ class FirebaseDatabase {
   }
 }
 
-/// Extension for firebase database
-extension ExtensionFutureDocumentSnapshot<T> on Future<DocumentSnapshot<T>> {
-  Widget builder(
-    Widget Function(BuildContext context, T? data) builder, {
-    bool checkHasError = true,
-    bool checkNotExist = true,
-  }) {
-    return FutureBuilder(
-      future: this,
-      builder: (context, snapshot) {
-        if (checkHasError && snapshot.hasError) {
-          return InfoBar(
-            severity: InfoBarSeverity.error,
-            title: const Text('Something went wrong'),
-            content: Text(snapshot.error.toString()),
-            action: GptButton(snapshot.error.toString()),
-          );
-        }
+Widget _onError(BuildContext context, Object? error) {
+  return InfoBar(
+    severity: InfoBarSeverity.error,
+    title: const Text('Something went wrong'),
+    content: Text(error.toString()),
+    action: GptButton(error.toString()),
+  );
+}
 
-        if (checkNotExist && snapshot.hasData && !snapshot.data!.exists) {
-          return const InfoBar(
-            severity: InfoBarSeverity.warning,
-            title: Text('Document does not exist'),
-          );
-        }
-
-        if (snapshot.connectionState == ConnectionState.done) {
-          return builder.call(context, snapshot.data?.data());
-        }
-
-        return const InfoBar(title: Text('Loading'));
-      },
-    );
-  }
+Widget _onLoading(BuildContext context) {
+  return const InfoBar(title: Text('Loading'));
 }
 
 /// Extension for firebase database
 extension ExtensionStreamDocumentSnapshot<T> on Stream<DocumentSnapshot<T>> {
   Widget builder(
-    Widget Function(BuildContext context, T? data) builder, {
-    bool checkHasError = true,
+    Widget Function(BuildContext context, T? data) onData, {
+    Widget Function(BuildContext context, Object? error) onError = _onError,
+    Widget Function(BuildContext context) onLoading = _onLoading,
   }) {
     return StreamBuilder(
       stream: this,
       builder: (context, snapshot) {
-        if (checkHasError && snapshot.hasError) {
-          final content = snapshot.error.toString();
-
-          return InfoBar(
-            isLong: true,
-            severity: InfoBarSeverity.error,
-            title: const Text('Something went wrong'),
-            content: Text(content),
-            action: GptButton(content),
-          );
+        if (snapshot.hasError) {
+          return _onError(context, snapshot.error);
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const InfoBar(title: Text('Loading'));
+          return _onLoading(context);
         }
 
-        return builder.call(context, snapshot.data?.data());
+        return onData.call(context, snapshot.data?.data());
       },
     );
   }
