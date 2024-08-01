@@ -20,7 +20,6 @@ void main() async {
       webProvider: ReCaptchaV3Provider(
         const String.fromEnvironment('RE_CAPTCHA_SITE_KEY'),
       ),
-      androidProvider: AndroidProvider.playIntegrity,
       appleProvider: AppleProvider.debug,
     );
 

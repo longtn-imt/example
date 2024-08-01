@@ -29,7 +29,7 @@ class UserPage extends StatelessWidget {
                   (currentUser.displayName ?? '')
                       .split(' ')
                       .map((e) => e.substring(0, 1))
-                      .join(''),
+                      .join(),
                   style: const TextStyle(fontSize: 48),
                 ),
               ),

@@ -13,3 +13,4 @@ linter:
     - prefer_final_fields
     - prefer_final_locals
     - prefer_final_in_for_each
+    - avoid_redundant_argument_values

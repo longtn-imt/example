@@ -3,6 +3,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import '../apis/devops_client.dart';
 import '../firebase/firebase_database.dart';
 import '../model/devops_config.dart';
+import '../model/project.dart';
 import '../model/work_item.dart';
 
 class DsmPage extends StatefulWidget {
@@ -17,6 +18,8 @@ class _DsmPageState extends State<DsmPage> {
 
   DevOpsClient? client;
   Iterable<WorkItem> workItems = const [];
+  Iterable<Project> projects = const [];
+  Project? selectedProject;
 
   @override
   void initState() {
@@ -83,31 +86,32 @@ class _DsmPageState extends State<DsmPage> {
       header: const Text('Project'),
       content: Column(
         children: [
-          TextBox(
-            controller: organizationController,
-            placeholder: 'Enter organization name',
-            onSubmitted: _updateProject,
-            suffix: IconButton(
-              icon: const Icon(FluentIcons.search),
-              onPressed: () => _updateProject().execute(context),
+          InfoLabel(
+            label: 'Organization',
+            child: TextBox(
+              readOnly: true,
+              controller: organizationController,
+              suffix: IconButton(
+                icon: const Icon(FluentIcons.search),
+                onPressed: () => _loadWorkItems().execute(context),
+              ),
             ),
           ),
           const SizedBox(height: 8),
-          ComboBox<int>(
-            value: 1,
-            onChanged: (value) {},
-            isExpanded: true,
-            placeholder: const Text('Enter project name'),
-            items: const [
-              ComboBoxItem(
-                value: 1,
-                child: Text('Project 1'),
-              ),
-              ComboBoxItem(
-                value: 2,
-                child: Text('Project 2'),
-              ),
-            ],
+          InfoLabel(
+            label: 'Project',
+            child: ComboBox<Project>(
+              isExpanded: true,
+              placeholder: const Text('Select project name'),
+              items: projects
+                  .map((e) => ComboBoxItem(
+                        value: e,
+                        child: Text(e.name ?? e.id ?? ''),
+                      ))
+                  .toList(),
+              value: selectedProject,
+              onChanged: (value) => setState(() => selectedProject = value),
+            ),
           ),
         ],
       ),
@@ -118,20 +122,38 @@ class _DsmPageState extends State<DsmPage> {
     final snapshot = await FirebaseDatabase.instance.getDevopsConfig();
     final DevopsConfig? config = snapshot.data();
 
-    if (config != null) {
+    if (config == null) throw 'Config not found';
+
+    setState(() {
       client = DevOpsClient.fromConfig(config);
-      setState(() {});
-    } else {
-      throw 'Config not found';
-    }
+      organizationController.text = config.selectedOrganization ?? '';
+    });
+
+    if (!mounted) return;
+    await _loadProjects(config.selectedOrganization).execute(context);
   }
 
-  Future<void> _updateProject([String? value]) async {
+  Future<void> _loadWorkItems([String? value]) async {
     if (client == null) return;
 
     final String organization = value ?? organizationController.text;
-    final result = await client!.myWorkRecentActivity(organization);
-    workItems = result.value?.whereType<WorkItem>() ?? const [];
-    setState(() {});
+    if (organization.isEmpty) return;
+
+    final result = await client!.workRecentActivity(organization);
+    setState(() {
+      workItems = result.value?.whereType<WorkItem>() ?? const [];
+    });
+  }
+
+  Future<void> _loadProjects([String? value]) async {
+    if (client == null) return;
+
+    final String organization = value ?? organizationController.text;
+    if (organization.isEmpty) return;
+
+    final result = await client!.projects(organization);
+    setState(() {
+      projects = result.value?.whereType<Project>() ?? const [];
+    });
   }
 }
