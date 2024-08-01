@@ -34,11 +34,33 @@ class FirebaseDatabase {
   }
 }
 
-Widget _onError(BuildContext context, Object? error) {
+Widget _onSuccess(
+  BuildContext context,
+  String message, {
+  VoidCallback? close,
+}) {
   return InfoBar(
+    isLong: true,
+    severity: InfoBarSeverity.success,
+    title: Text(message),
+    action: IconButton(
+      icon: const Icon(FluentIcons.clear),
+      onPressed: close,
+    ),
+  );
+}
+
+Widget _onError(
+  BuildContext context,
+  Object? error, {
+  Object? stackTrace,
+  bool showDetailError = false,
+}) {
+  return InfoBar(
+    isLong: true,
     severity: InfoBarSeverity.error,
-    title: const Text('Something went wrong'),
-    content: Text(error.toString()),
+    title: Text(error.toString()),
+    content: showDetailError ? Text(stackTrace.toString()) : null,
     action: GptButton(error.toString()),
   );
 }
@@ -58,11 +80,11 @@ extension ExtensionStreamDocumentSnapshot<T> on Stream<DocumentSnapshot<T>> {
       stream: this,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return _onError(context, snapshot.error);
+          return onError(context, snapshot.error);
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return _onLoading(context);
+          return onLoading(context);
         }
 
         return onData.call(context, snapshot.data?.data());
@@ -81,13 +103,10 @@ extension ExtensionFuture<T> on Future<T> {
         if (successMessage != null) {
           displayInfoBar(
             context,
-            builder: (context, close) => InfoBar(
-              severity: InfoBarSeverity.success,
-              title: Text(successMessage),
-              action: IconButton(
-                icon: const Icon(FluentIcons.clear),
-                onPressed: close,
-              ),
+            builder: (context, close) => _onSuccess(
+              context,
+              successMessage,
+              close: close,
             ),
           );
         }
@@ -97,12 +116,11 @@ extension ExtensionFuture<T> on Future<T> {
         displayInfoBar(
           context,
           duration: const Duration(seconds: 5),
-          builder: (context, close) => InfoBar(
-            isLong: showDetailError,
-            severity: InfoBarSeverity.error,
-            title: Text(error.toString()),
-            content: showDetailError ? Text(stackTrace.toString()) : null,
-            action: GptButton(error.toString()),
+          builder: (context, close) => _onError(
+            context,
+            error,
+            stackTrace: stackTrace,
+            showDetailError: showDetailError,
           ),
         );
 

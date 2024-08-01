@@ -13,7 +13,7 @@ class DevopsStatusButton extends StatelessWidget {
     return FirebaseDatabase.instance.snapshotsDevopsConfig().builder(
           onData,
           onError: (context, error) => const Icon(FluentIcons.error),
-          onLoading: (context) => const Icon(FluentIcons.status_circle_ring),
+          onLoading: (context) => const Icon(FluentIcons.sync_status),
         );
   }
 
