@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:go_router/go_router.dart';
 
+import '../app_controller.dart';
 import '../firebase/firebase_authentication.dart';
 import '../router/routes.dart';
 
@@ -31,7 +32,16 @@ class DashboardShell extends StatelessWidget {
           PaneItemSeparator(),
           PaneItem(
             icon: const Icon(FluentIcons.color),
-            title: const Text('Theme'),
+            title: const Text('Dark mode'),
+            trailing: ListenableBuilder(
+              listenable: appController,
+              builder: (context, _) {
+                return ToggleSwitch(
+                  checked: appController.isDarkMode,
+                  onChanged: appController.changeTheme,
+                );
+              },
+            ),
             body: navigator,
           ),
           if (FirebaseAuthentication.instance.currentUser != null)
