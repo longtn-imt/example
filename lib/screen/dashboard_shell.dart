@@ -22,6 +22,9 @@ class DashboardShell extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: Text('Example App'),
       ),
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return DrillInPageTransition(animation: animation, child: child);
+      },
       pane: NavigationPane(
         items: $dashboardShellRoute.routes
             .map((route) => _routeToNavigation(route, navigator))

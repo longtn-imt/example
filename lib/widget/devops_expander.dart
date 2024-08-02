@@ -18,6 +18,41 @@ class _DevopsExpanderState extends State<DevopsExpander> {
   TextEditingController organizationController = TextEditingController();
   FocusNode organizationFocusNode = FocusNode();
 
+  Future _updateConfig(DevopsConfig? data) => FirebaseDatabase.instance
+      .saveUserDevopsInfo(
+        (data ?? const DevopsConfig()).copyWith(
+          baseUrl: baseUrlController.text,
+          username: usernameController.text,
+          password: passwordController.text,
+          selectedOrganization: organizationController.text,
+        ),
+      )
+      .execute(context, successMessage: 'Update successfully');
+
+  Future _addOrganization(DevopsConfig? data) => FirebaseDatabase.instance
+      .saveUserDevopsInfo(
+        (data ?? const DevopsConfig()).copyWith(
+          selectedOrganization: organizationController.text,
+          organizations: [
+            ...?data?.organizations,
+            organizationController.text,
+          ],
+        ),
+      )
+      .execute(context, successMessage: 'Add organization successfully');
+
+  Future _removeOrganization(DevopsConfig? data, String item) =>
+      FirebaseDatabase.instance
+          .saveUserDevopsInfo(
+            (data ?? const DevopsConfig()).copyWith(
+              selectedOrganization: null,
+              organizations: (data?.organizations ?? [])
+                  .where((element) => element != item)
+                  .toList(),
+            ),
+          )
+          .execute(context, successMessage: 'Remove organization successfully');
+
   @override
   void dispose() {
     super.dispose();
@@ -91,15 +126,7 @@ class _DevopsExpanderState extends State<DevopsExpander> {
         buildSelectOrganization(context, data),
         const SizedBox(height: 16),
         FilledButton(
-          onPressed: () => FirebaseDatabase.instance
-              .saveUserDevopsInfo(
-                (data ?? const DevopsConfig()).copyWith(
-                  baseUrl: baseUrlController.text,
-                  username: usernameController.text,
-                  password: passwordController.text,
-                ),
-              )
-              .execute(context, successMessage: 'Update successfully'),
+          onPressed: () => _updateConfig(data),
           child: const Text('Update'),
         )
       ],
@@ -122,25 +149,13 @@ class _DevopsExpanderState extends State<DevopsExpander> {
               item.label,
               style: FluentTheme.of(context).typography.body,
             ),
-            onPressed: () => FirebaseDatabase.instance
-                .saveUserDevopsInfo(
-                  (data ?? const DevopsConfig()).copyWith(
-                    selectedOrganization: item.value,
-                  ),
-                )
-                .whenComplete(() => organizationFocusNode.unfocus()),
+            onPressed: () {
+              organizationController.text = item.value;
+              organizationFocusNode.unfocus();
+            },
             trailing: IconButton(
               icon: const Icon(FluentIcons.remove, size: 12),
-              onPressed: () => FirebaseDatabase.instance
-                  .saveUserDevopsInfo(
-                    (data ?? const DevopsConfig()).copyWith(
-                      selectedOrganization: null,
-                      organizations: (data?.organizations ?? [])
-                          .where((element) => element != item.value)
-                          .toList(),
-                    ),
-                  )
-                  .execute(context, successMessage: 'Remove successfully'),
+              onPressed: () => _removeOrganization(data, item.value),
             ),
           );
         },
@@ -151,17 +166,7 @@ class _DevopsExpanderState extends State<DevopsExpander> {
               style: FluentTheme.of(context).typography.body,
             ),
             trailing: const Icon(FluentIcons.add, size: 12),
-            onPressed: () => FirebaseDatabase.instance
-                .saveUserDevopsInfo(
-                  (data ?? const DevopsConfig()).copyWith(
-                    selectedOrganization: organizationController.text,
-                    organizations: [
-                      ...?data?.organizations,
-                      organizationController.text,
-                    ],
-                  ),
-                )
-                .execute(context, successMessage: 'Create successfully'),
+            onPressed: () => _addOrganization(data),
           );
         },
       ),

@@ -40,7 +40,6 @@ Widget _onSuccess(
   VoidCallback? close,
 }) {
   return InfoBar(
-    isLong: true,
     severity: InfoBarSeverity.success,
     title: Text(message),
     action: IconButton(
