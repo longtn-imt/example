@@ -72,21 +72,23 @@ Widget _onLoading(BuildContext context) {
 extension ExtensionStreamDocumentSnapshot<T> on Stream<DocumentSnapshot<T>> {
   Widget builder(
     Widget Function(BuildContext context, T? data) onData, {
-    Widget Function(BuildContext context, Object? error) onError = _onError,
-    Widget Function(BuildContext context) onLoading = _onLoading,
+    Widget Function(BuildContext context, Object? error)? onError = _onError,
+    Widget Function(BuildContext context)? onLoading = _onLoading,
   }) {
     return StreamBuilder(
       stream: this,
       builder: (context, snapshot) {
+        Widget? result;
+
         if (snapshot.hasError) {
-          return onError(context, snapshot.error);
+          result ??= onError?.call(context, snapshot.error);
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return onLoading(context);
+          result ??= onLoading?.call(context);
         }
 
-        return onData.call(context, snapshot.data?.data());
+        return result ?? onData.call(context, snapshot.data?.data());
       },
     );
   }

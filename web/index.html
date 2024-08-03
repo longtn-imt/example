@@ -26,9 +26,6 @@
   <meta name="apple-mobile-web-app-title" content="example">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F3F3">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#202020">
-
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
@@ -40,6 +37,19 @@
 
   <title>example</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Styles custom -->
+  <style>
+    body {
+      background-color: #F3F3F3;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #202020;
+      }
+    }
+  </style>
 </head>
 <body>
   <div id="loading">

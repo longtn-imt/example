@@ -59,8 +59,8 @@ class _AutoBoxOrganizationState extends State<AutoBoxOrganization> {
   Widget build(BuildContext context) {
     return FirebaseDatabase.instance.streamDevopsConfig().builder(
           onData,
-          onError: (context, error) => const SizedBox.shrink(),
-          onLoading: (context) => const SizedBox.shrink(),
+          onError: null,
+          onLoading: null,
         );
   }
 
