@@ -1,9 +1,9 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
 import '../apis/devops_client.dart';
-import '../firebase/firebase_database.dart';
 import '../model/project.dart';
 import '../model/work_item.dart';
+import '../widget/auto_box_organization.dart';
 import '../widget/combo_box_project.dart';
 import '../widget/devops_status_button.dart';
 
@@ -15,16 +15,8 @@ class DsmPage extends StatefulWidget {
 }
 
 class _DsmPageState extends State<DsmPage> {
-  TextEditingController organizationController = TextEditingController();
-
   DevOpsClient? client;
   Iterable<WorkItem> workItems = const [];
-
-  @override
-  void dispose() {
-    super.dispose();
-    organizationController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +29,7 @@ class _DsmPageState extends State<DsmPage> {
           if (value == null) return;
 
           client = DevOpsClient.fromConfig(value);
-          Future.delayed(Duration.zero, () {
-            organizationController.text = value.selectedOrganization ?? '';
-          });
+          _loadWorkItems();
         }),
       ),
       children: List.generate(workItems.length + 1, (index) {
@@ -80,20 +70,13 @@ class _DsmPageState extends State<DsmPage> {
         children: [
           InfoLabel(
             label: 'Organization',
-            child: TextBox(
-              readOnly: true,
-              controller: organizationController,
-              suffix: IconButton(
-                icon: const Icon(FluentIcons.search),
-                onPressed: () => _loadWorkItems().execute(context),
-              ),
-            ),
+            child: const AutoBoxOrganization(),
           ),
           const SizedBox(height: 8),
           InfoLabel(
             label: 'Project',
             child: ComboBoxProject(
-              organization: organizationController.text,
+              client: client,
               onChanged: (Project? value) {},
             ),
           ),
@@ -102,13 +85,10 @@ class _DsmPageState extends State<DsmPage> {
     );
   }
 
-  Future<void> _loadWorkItems([String? value]) async {
+  Future<void> _loadWorkItems() async {
     if (client == null) return;
 
-    final String organization = value ?? organizationController.text;
-    if (organization.isEmpty) return;
-
-    final result = await client!.workRecentActivity(organization);
+    final result = await client!.workRecentActivity();
     setState(() {
       workItems = result.value?.whereType<WorkItem>() ?? const [];
     });

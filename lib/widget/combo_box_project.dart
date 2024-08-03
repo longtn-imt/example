@@ -6,13 +6,11 @@ import '../model/project.dart';
 class ComboBoxProject extends StatefulWidget {
   const ComboBoxProject({
     super.key,
-    required this.organization,
-    this.client,
+    required this.client,
     this.initValue,
     this.onChanged,
   });
 
-  final String organization;
   final DevOpsClient? client;
   final Project? initValue;
   final ValueChanged<Project?>? onChanged;
@@ -25,13 +23,10 @@ class _ComboBoxProjectState extends State<ComboBoxProject> {
   Iterable<Project> projects = const [];
   Project? selectedProject;
 
-  Future<void> _loadProjects([String? value]) async {
+  Future<void> _loadProjects() async {
     if (widget.client == null) return;
 
-    final String organization = value ?? widget.organization;
-    if (organization.isEmpty) return;
-
-    final result = await widget.client!.projects(organization);
+    final result = await widget.client!.projects();
     setState(() {
       projects = result.value?.whereType<Project>() ?? const [];
     });
@@ -49,9 +44,10 @@ class _ComboBoxProjectState extends State<ComboBoxProject> {
   void didUpdateWidget(covariant ComboBoxProject oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (widget.organization != oldWidget.organization) {
+    if (widget.client != oldWidget.client) {
       _loadProjects();
-    } else if (widget.initValue != oldWidget.initValue) {
+    }
+    if (widget.initValue != oldWidget.initValue) {
       setState(() {
         selectedProject = widget.initValue;
       });

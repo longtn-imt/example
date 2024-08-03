@@ -4,11 +4,11 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:go_router/go_router.dart';
 
 import '../firebase/firebase_authentication.dart';
+import '../screen/build_page.dart';
 import '../screen/dashboard_shell.dart';
 import '../screen/dsm_page.dart';
 import '../screen/home_page.dart';
 import '../screen/setting_page.dart';
-import '../screen/task_page.dart';
 import '../screen/user_page.dart';
 import 'go_router_refresh_stream.dart';
 
@@ -38,7 +38,7 @@ class InitialRoute extends GoRouteData {
     TypedGoRoute<HomeRoute>(path: '/home'),
     TypedGoRoute<UserRoute>(path: '/user', routes: [
       TypedGoRoute<DmsRoute>(path: 'dms'),
-      TypedGoRoute<TaskRoute>(path: 'task'),
+      TypedGoRoute<BuildRoute>(path: 'build'),
     ]),
     TypedGoRoute<SettingRoute>(path: '/setting'),
   ],
@@ -86,12 +86,12 @@ class DmsRoute extends GoRouteData {
   }
 }
 
-class TaskRoute extends GoRouteData {
-  const TaskRoute();
+class BuildRoute extends GoRouteData {
+  const BuildRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const TaskPage();
+    return const BuildPage();
   }
 }
 

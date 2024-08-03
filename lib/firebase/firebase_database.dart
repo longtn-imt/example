@@ -25,7 +25,7 @@ class FirebaseDatabase {
     return _devopCollection.doc(userId).get();
   }
 
-  Stream<DocumentSnapshot<DevopsConfig>> snapshotsDevopsConfig() {
+  Stream<DocumentSnapshot<DevopsConfig>> streamDevopsConfig() {
     return _devopCollection.doc(userId).snapshots();
   }
 
