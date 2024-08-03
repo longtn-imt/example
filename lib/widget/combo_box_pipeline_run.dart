@@ -2,6 +2,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 
 import '../apis/devops_client.dart';
 import '../model/pipeline_run.dart';
+import '../model/project.dart';
 
 class ComboBoxPipelineRun extends StatefulWidget {
   const ComboBoxPipelineRun({
@@ -14,7 +15,7 @@ class ComboBoxPipelineRun extends StatefulWidget {
   });
 
   final DevOpsClient? client;
-  final String? project;
+  final Project? project;
   final String? pipelineId;
   final PipelineRun? initValue;
   final ValueChanged<PipelineRun?>? onChanged;
@@ -33,7 +34,7 @@ class _ComboBoxPipelineRunState extends State<ComboBoxPipelineRun> {
     if (widget.pipelineId == null) return;
 
     final result = await widget.client!.pipelineRuns(
-      widget.project!,
+      widget.project!.id,
       widget.pipelineId!,
     );
     setState(() {
@@ -71,7 +72,7 @@ class _ComboBoxPipelineRunState extends State<ComboBoxPipelineRun> {
       items: runs
           .map((e) => ComboBoxItem(
                 value: e,
-                child: Text(e.name ?? ''),
+                child: Text(e.name ?? e.id.toString()),
               ))
           .toList(),
       value: selectedPipelineRun,

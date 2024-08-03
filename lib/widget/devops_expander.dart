@@ -2,7 +2,6 @@ import 'package:fluent_ui/fluent_ui.dart';
 
 import '../firebase/firebase_database.dart';
 import '../model/devops_config.dart';
-import 'auto_box_organization.dart';
 
 /// ======== DevOps Config ========
 class DevopsExpander extends StatefulWidget {
@@ -90,11 +89,6 @@ class _DevopsExpanderState extends State<DevopsExpander> {
             controller: passwordController,
             placeholder: 'Enter password',
           ),
-        ),
-        const SizedBox(height: 16),
-        InfoLabel(
-          label: 'Organization',
-          child: const AutoBoxOrganization(),
         ),
         const SizedBox(height: 16),
         FilledButton(

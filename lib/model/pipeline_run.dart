@@ -6,7 +6,7 @@ part 'pipeline_run.g.dart';
 @freezed
 class PipelineRun with _$PipelineRun {
   const factory PipelineRun({
-    int? id,
+    required int id,
     String? name,
     String? url,
     String? createdDate,

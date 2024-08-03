@@ -62,7 +62,7 @@ class _ComboBoxProjectState extends State<ComboBoxProject> {
       items: projects
           .map((e) => ComboBoxItem(
                 value: e,
-                child: Text(e.name ?? e.id ?? ''),
+                child: Text(e.name ?? e.id),
               ))
           .toList(),
       value: selectedProject,

@@ -6,8 +6,8 @@ part 'work_item.g.dart';
 @freezed
 class WorkItem with _$WorkItem {
   const factory WorkItem({
+    required int id,
     AssignedTo? assignedTo,
-    int? id,
     String? workItemType,
     String? title,
     String? state,

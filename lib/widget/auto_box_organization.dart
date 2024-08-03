@@ -4,7 +4,9 @@ import '../firebase/firebase_database.dart';
 import '../model/devops_config.dart';
 
 class AutoBoxOrganization extends StatefulWidget {
-  const AutoBoxOrganization({super.key});
+  const AutoBoxOrganization({super.key, this.onChanged});
+
+  final ValueChanged<DevopsConfig?>? onChanged;
 
   @override
   State<AutoBoxOrganization> createState() => _AutoBoxOrganizationState();
@@ -66,12 +68,14 @@ class _AutoBoxOrganizationState extends State<AutoBoxOrganization> {
 
   Widget onData(BuildContext context, DevopsConfig? data) {
     if (data?.selectedOrganization != null) {
+      widget.onChanged?.call(data);
       Future.delayed(Duration.zero, () {
         controller.text = data!.selectedOrganization!;
       });
     }
 
     return AutoSuggestBox<String>(
+      enabled: data != null,
       focusNode: focusNode,
       controller: controller,
       placeholder: 'Enter organization name',

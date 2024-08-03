@@ -5,7 +5,6 @@ import '../model/project.dart';
 import '../model/work_item.dart';
 import '../widget/auto_box_organization.dart';
 import '../widget/combo_box_project.dart';
-import '../widget/devops_status_button.dart';
 
 class DsmPage extends StatefulWidget {
   const DsmPage({super.key});
@@ -15,7 +14,7 @@ class DsmPage extends StatefulWidget {
 }
 
 class _DsmPageState extends State<DsmPage> {
-  DevOpsClient? client;
+  DevOpsClient? _client;
   Iterable<WorkItem> workItems = const [];
 
   @override
@@ -23,15 +22,7 @@ class _DsmPageState extends State<DsmPage> {
     final FluentThemeData theme = FluentTheme.of(context);
 
     return ScaffoldPage.scrollable(
-      header: PageHeader(
-        title: const Text('DSM task'),
-        commandBar: DevopsStatusButton(onChanged: (value) {
-          if (value == null) return;
-
-          client = DevOpsClient.fromConfig(value);
-          _loadWorkItems();
-        }),
-      ),
+      header: const PageHeader(title: Text('DSM task')),
       children: List.generate(workItems.length + 1, (index) {
         /// Header
         if (index == 0) return buildHeader(context);
@@ -70,13 +61,20 @@ class _DsmPageState extends State<DsmPage> {
         children: [
           InfoLabel(
             label: 'Organization',
-            child: const AutoBoxOrganization(),
+            child: AutoBoxOrganization(
+              onChanged: (value) {
+                if (value == null) return;
+
+                _client = DevOpsClient.fromConfig(value);
+                _loadWorkItems();
+              },
+            ),
           ),
           const SizedBox(height: 8),
           InfoLabel(
             label: 'Project',
             child: ComboBoxProject(
-              client: client,
+              client: _client,
               onChanged: (Project? value) {},
             ),
           ),
@@ -86,9 +84,9 @@ class _DsmPageState extends State<DsmPage> {
   }
 
   Future<void> _loadWorkItems() async {
-    if (client == null) return;
+    if (_client == null) return;
 
-    final result = await client!.workRecentActivity();
+    final result = await _client!.workRecentActivity();
     setState(() {
       workItems = result.value?.whereType<WorkItem>() ?? const [];
     });

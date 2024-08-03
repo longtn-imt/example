@@ -6,8 +6,8 @@ part 'pipeline.g.dart';
 @freezed
 class Pipeline with _$Pipeline {
   const factory Pipeline({
+    required int id,
     String? folder,
-    int? id,
     String? name,
     int? revision,
     String? url,
