@@ -9,6 +9,7 @@
 			"options": [
 				"web",
 				"apk",
+				"appbundle",
 				"ipa"
 			]
 		}
@@ -52,8 +53,7 @@
 			"args": [
 				"build",
 				"${input:buildType}",
-				"--dart-define-from-file",
-				".env",
+				"--dart-define-from-file=.env"
 			],
 			"group": "build",
 			"problemMatcher": [],
