@@ -8,6 +8,7 @@ import '../screen/build_page.dart';
 import '../screen/dashboard_shell.dart';
 import '../screen/dsm_page.dart';
 import '../screen/home_page.dart';
+import '../screen/privacy_policy_page.dart';
 import '../screen/setting_page.dart';
 import '../screen/user_page.dart';
 import 'go_router_refresh_stream.dart';
@@ -30,6 +31,16 @@ class InitialRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const HomeRoute().build(context, state);
+  }
+}
+
+@TypedGoRoute<PrivacyPolicyRoute>(path: '/privacy-policy')
+class PrivacyPolicyRoute extends GoRouteData {
+  const PrivacyPolicyRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const PrivacyPolicyPage();
   }
 }
 
