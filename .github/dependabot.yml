@@ -13,6 +13,14 @@ updates:
       - "dependabot"
       - "github-actions"
 
+  - package-ecosystem: "bundler"
+    directory: "/android"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependabot"
+      - "bundler"
+
   - package-ecosystem: "pub"
     directory: "/"
     schedule:

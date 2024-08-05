@@ -1,3 +1,4 @@
+name: Deploy to web
 on:
   workflow_dispatch:
   push:
@@ -5,6 +6,9 @@ on:
       - main
     paths:
       - lib/**
+
+# Declare default permissions as read only.
+permissions: read-all
 
 jobs:
   deploy:
