@@ -10,28 +10,20 @@
     pkgs.unzip
   ];
   # Sets environment variables in the workspace
-  env = { };
+  env = {};
   idx = {
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
       "Dart-Code.flutter"
       "Dart-Code.dart-code"
-      "eamodio.gitlens"
-      "usernamehw.errorlens"
-      "esbenp.prettier-vscode"
-      "PKief.material-icon-theme"
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
-        init-flutter = ''
-          killall -9 dart
-          flutter clean
+        build-flutter = ''
           flutter pub cache clean -f
           flutter pub get --no-example
-        '';
 
-        build-flutter = ''
           cd /home/user/example/android
 
           ./gradlew \
