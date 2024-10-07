@@ -114,16 +114,18 @@ extension ExtensionFuture<T> on Future<T> {
 
         return value;
       }).catchError((error, stackTrace) {
-        displayInfoBar(
-          context,
-          duration: const Duration(seconds: 5),
-          builder: (context, close) => _onError(
+        if (context.mounted) {
+          displayInfoBar(
             context,
-            error,
-            stackTrace: stackTrace,
-            showDetailError: showDetailError,
-          ),
-        );
+            duration: const Duration(seconds: 5),
+            builder: (context, close) => _onError(
+              context,
+              error,
+              stackTrace: stackTrace,
+              showDetailError: showDetailError,
+            ),
+          );
+        }
 
         return Error.throwWithStackTrace(error, stackTrace);
       });

@@ -64,6 +64,9 @@ class FirebaseAuthentication {
           ..setCustomParameters({'locale': 'vi'}),
       );
 
+  Future<UserCredential> signInAnonymously() =>
+      FirebaseAuth.instance.signInAnonymously();
+
   Future<void> signOut() {
     GoogleSignIn().signOut();
 

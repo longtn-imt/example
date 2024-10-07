@@ -6,7 +6,7 @@
   "[dart]": {
     "editor.formatOnSave": true,
   },
-  "files.autoSave": "off",
+  "files.autoSave": "afterDelay",
   "git.autoRepositoryDetection": "subFolders",
   "IDX.aI.enableInlineCompletion": true,
   "IDX.aI.enableCodebaseIndexing": true,
