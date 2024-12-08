@@ -16,6 +16,11 @@
     extensions = [
       "Dart-Code.flutter"
       "Dart-Code.dart-code"
+      "dracula-theme.theme-dracula"
+      "eamodio.gitlens"
+      "esbenp.prettier-vscode"
+      "usernamehw.errorlens"
+      "PKief.material-icon-theme"
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file

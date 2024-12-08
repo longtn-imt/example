@@ -1,11 +1,7 @@
 name: Deploy to web
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - lib/**
+  schedule:
+    - cron: "0 0 15 * *"
 
 # Declare default permissions as read only.
 permissions: read-all
@@ -30,7 +26,7 @@ jobs:
       - run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - run: flutter build web --dart-define-from-file=.env
-      
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.DEPLOY_TOKEN }}
