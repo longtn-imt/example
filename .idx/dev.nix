@@ -45,9 +45,9 @@
 
       # To run something each time the workspace is (re)started, use the `onStart` hook
       onStart = {
-        runner-serve = ''
+        runner-watch = ''
           flutter pub get
-          flutter pub run build_runner serve --delete-conflicting-outputs
+          flutter pub run build_runner watch --delete-conflicting-outputs
         '';
       };
     };
