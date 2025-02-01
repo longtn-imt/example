@@ -43,7 +43,7 @@ dev_dependencies:
   # API
   retrofit_generator: ^9.1.5
   json_serializable: ^6.8.0
-  freezed: ^2.5.2
+  freezed: ^3.0.0-0.0.dev
 
   build_runner: ^2.4.11
   go_router_builder: ^2.7.0
